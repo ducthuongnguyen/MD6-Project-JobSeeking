@@ -1,11 +1,17 @@
 package com.codegym.model.entity;
 
 import com.codegym.constant.RoleName;
+import lombok.AllArgsConstructor;
+import lombok.Data;
+import lombok.NoArgsConstructor;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;
 
 @Entity
+@Data
+@NoArgsConstructor
+@AllArgsConstructor
 @Table(name = "roles")
 public class Role {
     @Id
@@ -15,28 +21,4 @@ public class Role {
     @NaturalId
     @Column(length = 60)
     private RoleName name;
-
-    public Role() {
-    }
-
-    public Role(Long id, RoleName name) {
-        this.id = id;
-        this.name = name;
-    }
-
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public RoleName getName() {
-        return name;
-    }
-
-    public void setName(RoleName name) {
-        this.name = name;
-    }
 }
