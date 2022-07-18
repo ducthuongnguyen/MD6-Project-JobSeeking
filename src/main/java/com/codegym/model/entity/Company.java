@@ -1,10 +1,9 @@
 package com.codegym.model.entity;
 
-import com.codegym.constant.Status;
+import com.codegym.constant.Constant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.HashSet;
@@ -25,7 +24,7 @@ public class Company {
     private String avatar;
     private String address;
     private String phoneNumber;
-    private Status status;
+    private Constant.Status status;
     private Integer isProposed;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns =

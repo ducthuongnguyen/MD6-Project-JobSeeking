@@ -1,6 +1,6 @@
 package com.codegym.model.entity;
 
-import com.codegym.constant.RoleName;
+import com.codegym.constant.Constant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -20,5 +20,5 @@ public class Role {
     @Enumerated(EnumType.STRING)
     @NaturalId
     @Column(length = 60)
-    private RoleName name;
+    private Constant.RoleName name;
 }

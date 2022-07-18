@@ -12,15 +12,11 @@ import java.util.Optional;
 public class CompanyService implements ICompanyService {
     @Autowired
     private ICompanyRepository companyRepository;
-    @Autowired
-    private Company company;
 
     @Override
     public Iterable<Company> findAll() {
         return null;
     }
-
-    public Iterable<CompanyResponse> showCompanyList() {return null;}
 
     @Override
     public Optional<Company> findById(Long id) {

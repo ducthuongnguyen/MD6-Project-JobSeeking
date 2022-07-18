@@ -1,7 +1,6 @@
 package com.codegym.model.entity;
 
-import com.codegym.constant.Gender;
-import com.codegym.constant.Status;
+import com.codegym.constant.Constant;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -25,14 +24,15 @@ public class RecruitmentNews {
     private Vacancy vacancy;
     @ManyToOne
     private Field field;
-    private String salaryFrom;
-    private String salaryTo;
+    private Integer salaryFrom;
+    private Integer salaryTo;
     private LocalDate expiredDate;
     private Integer employeeQuantity;
-    private Integer requiredExperience;
-    private Gender gender;
+    private Double requiredExperience;
+    private Constant.Gender gender;
     private String workingPlace;
     private String description;
-    private Status status;
+    private Constant.Status status;
     private Integer isProposed;
+    private Constant.WorkingType workingType;
 }
