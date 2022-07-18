@@ -1,11 +1,13 @@
 package com.codegym.model.entity;
 
-import lombok.*;
+import com.codegym.constant.Status;
+import org.springframework.stereotype.Component;
 
 import javax.persistence.*;
 import java.util.HashSet;
 import java.util.Set;
 
+@Component
 @Entity
 @Table(name = "companies")
 public class Company {
@@ -20,7 +22,7 @@ public class Company {
     private String address;
     private String phoneNumber;
     private Status companyStatus;
-    private int isPropose;
+    private Integer isProposed;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns =
     @JoinColumn(name = "user_id"), inverseJoinColumns =

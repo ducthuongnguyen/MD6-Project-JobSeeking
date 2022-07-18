@@ -1,4 +1,4 @@
-package com.codegym.model.entity;
+package com.codegym.constant;
 
 public enum WorkingType {
     PART_TIME,

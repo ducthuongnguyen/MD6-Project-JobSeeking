@@ -1,5 +1,6 @@
 package com.codegym.model.entity;
 
+import com.codegym.constant.RoleName;
 import org.hibernate.annotations.NaturalId;
 
 import javax.persistence.*;

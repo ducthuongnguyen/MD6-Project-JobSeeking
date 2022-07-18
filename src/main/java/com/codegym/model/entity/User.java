@@ -13,7 +13,6 @@ public class User {
     private String name;
     private String email;
     private String password;
-    private String confirmPassword;
     private String phoneNumber;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns =
@@ -24,12 +23,11 @@ public class User {
     public User() {
     }
 
-    public User(Long id, String name, String email, String password, String confirmPassword, String phoneNumber, Set<Role> roles) {
+    public User(Long id, String name, String email, String password, String phoneNumber, Set<Role> roles) {
         this.id = id;
         this.name = name;
         this.email = email;
         this.password = password;
-        this.confirmPassword = confirmPassword;
         this.phoneNumber = phoneNumber;
         this.roles = roles;
     }
@@ -64,14 +62,6 @@ public class User {
 
     public void setPassword(String password) {
         this.password = password;
-    }
-
-    public String getConfirmPassword() {
-        return confirmPassword;
-    }
-
-    public void setConfirmPassword(String confirmPassword) {
-        this.confirmPassword = confirmPassword;
     }
 
     public String getPhoneNumber() {
