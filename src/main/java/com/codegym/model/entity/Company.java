@@ -28,8 +28,8 @@ public class Company {
     private Constant.Status status;
     private Integer proposed;
     @ManyToMany(fetch = FetchType.EAGER)
-    @JoinTable(name = "user_role", joinColumns =
-    @JoinColumn(name = "user_id"), inverseJoinColumns =
+    @JoinTable(name = "company_role", joinColumns =
+    @JoinColumn(name = "company_id"), inverseJoinColumns =
     @JoinColumn(name = "role_id"))
     Set<Role> roles = new HashSet<>();
 }

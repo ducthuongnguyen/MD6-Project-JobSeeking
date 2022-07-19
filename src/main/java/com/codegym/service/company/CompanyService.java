@@ -15,21 +15,21 @@ public class CompanyService implements ICompanyService {
 
     @Override
     public Iterable<Company> findAll() {
-        return null;
+        return companyRepository.findAll();
     }
 
     @Override
     public Optional<Company> findById(Long id) {
-        return Optional.empty();
+        return companyRepository.findById(id);
     }
 
     @Override
     public Company save(Company company) {
-        return null;
+        return companyRepository.save(company);
     }
 
     @Override
     public void remove(Long id) {
-
+        companyRepository.deleteById(id);
     }
 }
