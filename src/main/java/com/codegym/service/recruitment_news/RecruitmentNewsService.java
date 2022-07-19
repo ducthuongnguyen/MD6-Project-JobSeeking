@@ -1,5 +1,6 @@
 package com.codegym.service.recruitment_news;
 
+import com.codegym.model.entity.RecruitmentNews;
 import com.codegym.repository.IRecruitmentNewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
@@ -11,18 +12,19 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
     @Autowired
     private IRecruitmentNewsRepository recruitmentNewsRepository;
 
+
     @Override
-    public Iterable<RecruitmentNewsService> findAll() {
+    public Iterable<RecruitmentNews> findAll() {
         return null;
     }
 
     @Override
-    public Optional<RecruitmentNewsService> findById(Long id) {
+    public Optional<RecruitmentNews> findById(Long id) {
         return recruitmentNewsRepository.findById(id);
     }
 
     @Override
-    public RecruitmentNewsService save(RecruitmentNewsService recruitmentNews) {
+    public RecruitmentNews save(RecruitmentNews recruitmentNews) {
         return null;
     }
 
