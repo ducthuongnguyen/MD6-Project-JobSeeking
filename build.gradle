@@ -36,7 +36,13 @@ dependencies {
     implementation group: 'org.springframework.boot', name: 'spring-boot-starter-mail', version: '1.2.0.RELEASE'
 
 //    implementation 'org.springframework.boot:spring-boot-starter-validation:2.4.5'
-
+// Security
+    implementation group: 'org.springframework.security', name: 'spring-security-web', version: '5.4.2'
+    implementation group: 'org.springframework.security', name: 'spring-security-config', version: '5.4.2'
+    implementation group: 'org.springframework.security', name: 'spring-security-taglibs', version: '5.4.2'
+    implementation group: 'org.springframework.security', name: 'spring-security-core', version: '5.4.3'
+    //JWT
+    implementation group: 'io.jsonwebtoken', name: 'jjwt', version: '0.9.0'
 }
 
 test {
