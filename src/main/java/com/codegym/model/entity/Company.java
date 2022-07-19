@@ -24,8 +24,9 @@ public class Company {
     private String avatar;
     private String address;
     private String phoneNumber;
+    private String introduction;
     private Constant.Status status;
-    private Integer isProposed;
+    private Integer proposed;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "user_role", joinColumns =
     @JoinColumn(name = "user_id"), inverseJoinColumns =
