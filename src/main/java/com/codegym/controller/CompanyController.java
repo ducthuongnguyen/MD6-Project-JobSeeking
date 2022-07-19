@@ -1,4 +1,5 @@
 package com.codegym.controller;
+
 import com.codegym.constant.Constant;
 import com.codegym.model.entity.Company;
 import com.codegym.service.company.ICompanyService;
@@ -45,7 +46,7 @@ public class CompanyController {
         company.setProposed(companyOptional.get().getProposed());
         company.setRoles(companyOptional.get().getRoles());
         companyService.save(company);
-        return new ResponseEntity<>( HttpStatus.OK);
+        return new ResponseEntity<>(HttpStatus.OK);
     }
 
     @PutMapping("change-status/{id}")
@@ -54,25 +55,12 @@ public class CompanyController {
         if (!companyOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Company company = new Company();
-
-        company.setId(companyOptional.get().getId());
-        company.setName(companyOptional.get().getName());
-        company.setEmail(companyOptional.get().getEmail());
-        company.setPassword(companyOptional.get().getPassword());
-        company.setAvatar(companyOptional.get().getAvatar());
-        company.setAddress(companyOptional.get().getAddress());
-        company.setPhoneNumber(companyOptional.get().getPhoneNumber());
-        company.setIntroduction(companyOptional.get().getIntroduction());
-        company.setProposed(companyOptional.get().getProposed());
-        company.setRoles(companyOptional.get().getRoles());
-        if (companyOptional.get().getStatus()== Constant.Status.LOCK){
-            company.setStatus(Constant.Status.UNLOCK);
+        if (companyOptional.get().getStatus() == Constant.Status.LOCK) {
+            companyOptional.get().setStatus(Constant.Status.UNLOCK);
         } else {
-            company.setStatus(Constant.Status.LOCK);
+            companyOptional.get().setStatus(Constant.Status.LOCK);
         }
-        companyService.save(company);
-        return new ResponseEntity<>( HttpStatus.OK);
+        companyService.save(companyOptional.get());
+        return new ResponseEntity<>(HttpStatus.OK);
     }
-
 }
