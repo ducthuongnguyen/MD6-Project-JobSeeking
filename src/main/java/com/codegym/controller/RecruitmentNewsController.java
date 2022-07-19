@@ -8,4 +8,5 @@ import org.springframework.web.bind.annotation.RestController;
 @RequestMapping("/recruitment-news")
 @CrossOrigin("*")
 public class RecruitmentNewsController {
+
 }

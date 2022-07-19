@@ -18,7 +18,7 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
 
     @Override
     public Optional<RecruitmentNewsService> findById(Long id) {
-        return Optional.empty();
+        return recruitmentNewsRepository.findById(id);
     }
 
     @Override

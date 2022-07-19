@@ -4,7 +4,8 @@ public interface Constant {
     public enum Gender {
         Male,
         Female,
-        Other
+        Others,
+        All
     }
 
     public enum RoleName {

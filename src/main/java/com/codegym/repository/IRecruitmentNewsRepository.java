@@ -6,4 +6,5 @@ import org.springframework.stereotype.Repository;
 
 @Repository
 public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNews,Long> {
+
 }
