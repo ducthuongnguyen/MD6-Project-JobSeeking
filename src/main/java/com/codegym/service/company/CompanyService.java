@@ -1,6 +1,7 @@
 package com.codegym.service.company;
 
 import com.codegym.model.entity.Company;
+import com.codegym.model.entity.RecruitmentNews;
 import com.codegym.repository.ICompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -36,5 +37,10 @@ public class CompanyService implements ICompanyService {
     @Override
     public Page<Company> findAll(Pageable pageable) {
         return companyRepository.findAll(pageable);
+    }
+
+    @Override
+    public Iterable<Company> findAllProposedCompanies() {
+        return companyRepository.findAllProposedCompanies();
     }
 }
