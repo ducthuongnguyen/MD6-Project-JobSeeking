@@ -25,7 +25,7 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
 
     @Override
     public RecruitmentNews save(RecruitmentNews recruitmentNews) {
-        return null;
+        return recruitmentNewsRepository.save(recruitmentNews);
     }
 
     @Override
