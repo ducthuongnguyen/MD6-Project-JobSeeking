@@ -16,7 +16,7 @@ public class CompanyService implements ICompanyService {
 
     @Override
     public Iterable<Company> findAll() {
-        return null;
+        return companyRepository.findAll();
     }
 
     @Override

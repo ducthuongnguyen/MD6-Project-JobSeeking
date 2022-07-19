@@ -17,10 +17,13 @@ public class CompanyController {
     @Autowired
     ICompanyService companyService;
 
-    @GetMapping
-    public ResponseEntity<Page<Company>> findAll(@PageableDefault(value = 1) Pageable pageable) {
-        return new ResponseEntity<>(companyService.findAll(pageable), HttpStatus.OK);
+//    @GetMapping
+//    public ResponseEntity<Page<Company>> findAll(@PageableDefault(value = 1) Pageable pageable) {
+//        return new ResponseEntity<>(companyService.findAll(pageable), HttpStatus.OK);
+//    }
+
+    @GetMapping()
+    public ResponseEntity<Iterable<Company>> findAll() {
+        return new ResponseEntity<>(companyService.findAll(), HttpStatus.OK);
     }
-
-
 }
