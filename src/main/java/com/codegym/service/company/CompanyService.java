@@ -1,9 +1,10 @@
 package com.codegym.service.company;
 
-import com.codegym.model.dto.response.CompanyResponse;
 import com.codegym.model.entity.Company;
 import com.codegym.repository.ICompanyRepository;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import java.util.Optional;
@@ -30,6 +31,10 @@ public class CompanyService implements ICompanyService {
 
     @Override
     public void remove(Long id) {
+    }
 
+    @Override
+    public Page<Company> findAll(Pageable pageable) {
+        return companyRepository.findAll(pageable);
     }
 }
