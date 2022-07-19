@@ -32,4 +32,9 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
     public void remove(Long id) {
 
     }
+
+    @Override
+    public Iterable<RecruitmentNews> findAllProposedRecruitmentNews() {
+        return recruitmentNewsRepository.findAllProposedRecruitmentNews();
+    }
 }

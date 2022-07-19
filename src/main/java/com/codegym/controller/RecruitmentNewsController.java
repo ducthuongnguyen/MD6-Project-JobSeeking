@@ -45,4 +45,10 @@ public class RecruitmentNewsController {
         }
         return new ResponseEntity<>(recruitmentNewsService.save(recruitmentNews.get()), HttpStatus.OK);
     }
+
+    @GetMapping("/proposal-news")
+    public ResponseEntity<Iterable<RecruitmentNews>> findAllProposedRecruitmentNews() {
+        return new ResponseEntity<>(recruitmentNewsService.findAllProposedRecruitmentNews(), HttpStatus.OK);
+    }
+
 }
