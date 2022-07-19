@@ -21,12 +21,12 @@ public class CompanyService implements ICompanyService {
 
     @Override
     public Optional<Company> findById(Long id) {
-        return Optional.empty();
+        return companyRepository.findById(id);
     }
 
     @Override
     public Company save(Company company) {
-        return null;
+        return companyRepository.save(company);
     }
 
     @Override
