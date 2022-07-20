@@ -4,7 +4,8 @@ public interface Constant {
     public enum Gender {
         Male,
         Female,
-        Other
+        Others,
+        All
     }
 
     public enum RoleName {
@@ -21,5 +22,10 @@ public interface Constant {
     public enum WorkingType {
         PART_TIME,
         FULL_TIME
+    }
+
+    public enum Proposal {
+        YES,
+        NO
     }
 }
