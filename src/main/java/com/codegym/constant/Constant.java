@@ -22,4 +22,9 @@ public interface Constant {
         PART_TIME,
         FULL_TIME
     }
+
+    public enum Proposal {
+        YES,
+        NO
+    }
 }
