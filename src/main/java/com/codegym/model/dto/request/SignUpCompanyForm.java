@@ -14,13 +14,13 @@ public class SignUpCompanyForm {
     private String phoneNumber;
     private String introduction;
     private Constant.Status status;
-    private Integer proposed;
+    private Constant.Proposal proposed;
     private Set<String> roles;
 
     public SignUpCompanyForm() {
     }
 
-    public SignUpCompanyForm(Long id, String name, String email, String password, String avatar, String address, String phoneNumber, String introduction, Constant.Status status, Integer proposed, Set<String> roles) {
+    public SignUpCompanyForm(Long id, String name, String email, String password, String avatar, String address, String phoneNumber, String introduction, Constant.Status status, Constant.Proposal proposed, Set<String> roles) {
         this.id = id;
         this.name = name;
         this.email = email;
@@ -106,11 +106,11 @@ public class SignUpCompanyForm {
         this.status = status;
     }
 
-    public Integer getProposed() {
+    public Constant.Proposal getProposed() {
         return proposed;
     }
 
-    public void setProposed(Integer proposed) {
+    public void setProposed(Constant.Proposal proposed) {
         this.proposed = proposed;
     }
 

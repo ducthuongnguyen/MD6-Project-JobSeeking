@@ -44,14 +44,14 @@ public class Company {
     @Size(min = 6,max = 100)
     private String introduction;
     private Constant.Status status;
-    private Integer proposed;
+    private Constant.Proposal proposed;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "company_role", joinColumns =
     @JoinColumn(name = "company_id"), inverseJoinColumns =
     @JoinColumn(name = "role_id"))
     Set<Role> roles = new HashSet<>();
 
-    public Company(String name,String email,String encode,String avatar,String address,String phoneNumber,String introduction,Constant.Status status,Integer proposed ){
+    public Company(String name,String email,String encode,String avatar,String address,String phoneNumber,String introduction,Constant.Status status,Constant.Proposal proposed ){
         this.name=name;
         this.email=email;
         this.password=encode;
