@@ -1,5 +1,7 @@
 package com.codegym.service.company;
 
+
+import com.codegym.model.entity.RecruitmentNews;
 import com.codegym.model.dto.DataMailDTO;
 import com.codegym.model.dto.response.CompanyResponse;
 import com.codegym.model.entity.Company;
@@ -8,6 +10,8 @@ import com.codegym.repository.ICompanyRepository;
 import com.codegym.service.MailService;
 import com.codegym.utils.Const;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.mail.MessagingException;
@@ -55,6 +59,16 @@ public class CompanyService implements ICompanyService {
 
     @Override
     public void remove(Long id) {
+    }
+
+    @Override
+    public Page<Company> findAll(Pageable pageable) {
+        return companyRepository.findAll(pageable);
+    }
+
+    @Override
+    public Iterable<Company> findAllProposedCompanies() {
+        return companyRepository.findAllProposedCompanies();
         companyRepository.deleteById(id);
     }
 

@@ -10,7 +10,7 @@ import java.util.Optional;
 @Service
 public class RecruitmentNewsService implements IRecruitmentNewsService {
     @Autowired
-    IRecruitmentNewsRepository recruitmentNewsRepository;
+    private IRecruitmentNewsRepository recruitmentNewsRepository;
 
     @Override
     public Iterable<RecruitmentNews> findAll() {
@@ -29,6 +29,12 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
 
     @Override
     public void remove(Long id) {
+
+    }
+
+    @Override
+    public Iterable<RecruitmentNews> findAllProposedRecruitmentNews() {
+        return recruitmentNewsRepository.findAllProposedRecruitmentNews();
         recruitmentNewsRepository.deleteById(id);
     }
 }
