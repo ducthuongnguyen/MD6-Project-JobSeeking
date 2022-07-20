@@ -28,7 +28,7 @@ public class RecruitmentNewsController {
         return new ResponseEntity<>(recruitmentNews, HttpStatus.OK);
     }
 
-    @PutMapping("/edit-recruitment-news/{id}")
+    @PutMapping("/{id}")
     public ResponseEntity<RecruitmentNews> updateRecruitmentNews(@RequestBody RecruitmentNews recruitmentNews, @PathVariable Long id) {
         Optional<RecruitmentNews> recruitmentNewsOptional = recruitmentNewsService.findById(id);
         if (!recruitmentNewsOptional.isPresent()) {
@@ -39,7 +39,7 @@ public class RecruitmentNewsController {
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
     }
 
-    @PostMapping("/create-recruitment-news")
+    @PostMapping()
     public ResponseEntity<RecruitmentNews> saveRecruitmentNews(@RequestBody RecruitmentNews recruitmentNews) {
         return new ResponseEntity<>(recruitmentNewsService.save(recruitmentNews), HttpStatus.OK);
     }
