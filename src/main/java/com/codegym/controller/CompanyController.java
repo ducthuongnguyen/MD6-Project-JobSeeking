@@ -49,7 +49,7 @@ public class CompanyController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("change-status/{id}")
+    @PutMapping("/change-status/{id}")
     public ResponseEntity<Company> updateStatus(@PathVariable Long id) {
         Optional<Company> companyOptional = companyService.findById(id);
         if (!companyOptional.isPresent()) {
