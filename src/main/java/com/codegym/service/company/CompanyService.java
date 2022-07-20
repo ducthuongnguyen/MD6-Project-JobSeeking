@@ -51,7 +51,7 @@ public class CompanyService implements ICompanyService {
 
             mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_REGISTER);
             return companyRepository.save(company);
-        } catch (MessagingException exp){
+        } catch (MessagingException exp) {
             exp.printStackTrace();
         }
         return companyRepository.save(company);
@@ -59,6 +59,7 @@ public class CompanyService implements ICompanyService {
 
     @Override
     public void remove(Long id) {
+        companyRepository.deleteById(id);
     }
 
     @Override
@@ -69,7 +70,6 @@ public class CompanyService implements ICompanyService {
     @Override
     public Iterable<Company> findAllProposedCompanies() {
         return companyRepository.findAllProposedCompanies();
-        companyRepository.deleteById(id);
     }
 
     public Optional<Company> findByName(String name) {

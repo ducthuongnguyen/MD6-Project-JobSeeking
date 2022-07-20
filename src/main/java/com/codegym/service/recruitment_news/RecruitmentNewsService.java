@@ -29,12 +29,11 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
 
     @Override
     public void remove(Long id) {
-
+        recruitmentNewsRepository.deleteById(id);
     }
 
     @Override
     public Iterable<RecruitmentNews> findAllProposedRecruitmentNews() {
         return recruitmentNewsRepository.findAllProposedRecruitmentNews();
-        recruitmentNewsRepository.deleteById(id);
     }
 }

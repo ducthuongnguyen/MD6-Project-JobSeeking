@@ -14,6 +14,7 @@ public interface ICompanyService extends IGeneralService<Company> {
     Page<Company> findAll(Pageable pageable);
 
     Iterable<Company> findAllProposedCompanies();
+
     //tim kiem co ton tai trong DB khong
     Optional<Company> findByName(String name);
 
