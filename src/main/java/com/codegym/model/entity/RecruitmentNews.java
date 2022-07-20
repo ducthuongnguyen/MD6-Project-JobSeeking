@@ -33,6 +33,6 @@ public class RecruitmentNews {
     private String workingPlace;
     private String description;
     private Constant.Status status;
-    private Integer proposed;
+    private Constant.Proposal proposed;
     private Constant.WorkingType workingType;
 }
