@@ -2,13 +2,14 @@ package com.codegym.controller;
 
 import com.codegym.constant.Constant;
 import com.codegym.model.entity.Company;
-import com.codegym.model.entity.RecruitmentNews;
 import com.codegym.service.company.ICompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+
 import java.util.Optional;
+
 import static com.codegym.constant.Constant.Status.LOCK;
 import static com.codegym.constant.Constant.Status.UNLOCK;
 
@@ -19,12 +20,6 @@ public class CompanyController {
     @Autowired
     private ICompanyService companyService;
 
-    @GetMapping
-    public ResponseEntity<Iterable<Company>> findAll() {
-        Iterable<Company> companies = companyService.findAll();
-        return new ResponseEntity<>(companies, HttpStatus.OK);
-    }
-
     @GetMapping("/{id}")
     public ResponseEntity<Company> findById(@PathVariable Long id) {
         Optional<Company> company = companyService.findById(id);
@@ -33,7 +28,6 @@ public class CompanyController {
         }
         return new ResponseEntity<>(company.get(), HttpStatus.OK);
     }
-
 
     @PutMapping("/{id}")
     public ResponseEntity<Company> update(@PathVariable Long id, @RequestBody Company company) {
@@ -51,8 +45,8 @@ public class CompanyController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-    @PutMapping("change-status/{id}")
-    public ResponseEntity<Company> updateStatus(@PathVariable Long id) {
+    @PutMapping("/approve/{id}")
+    public ResponseEntity<Company> approveCompany(@PathVariable Long id) {
         Optional<Company> companyOptional = companyService.findById(id);
         if (!companyOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -64,7 +58,7 @@ public class CompanyController {
         }
         companyService.save(companyOptional.get());
         return new ResponseEntity<>(HttpStatus.OK);
-}
+    }
 
 //    @GetMapping
 //    public ResponseEntity<Page<Company>> findAll(@PageableDefault(value = 1) Pageable pageable) {
