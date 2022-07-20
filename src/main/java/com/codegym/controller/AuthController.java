@@ -130,101 +130,18 @@ public class AuthController {
                 signUpCompanyForm.getPhoneNumber(),signUpCompanyForm.getIntroduction(),signUpCompanyForm.getStatus(),signUpCompanyForm.getProposed());
         User user = new User(signUpCompanyForm.getName(), signUpCompanyForm.getEmail(), signUpCompanyForm.getEmail(), signUpCompanyForm.getPhoneNumber(), passwordEncoder.encode(signUpCompanyForm.getPassword()));
         Set<String> strRoles = signUpCompanyForm.getRoles();
-//        Set<String> strRoles1 = signUpForm.getRoles();
         Set<Role> roles = new HashSet<>();
-        strRoles.forEach(role -> {
-            switch (role) {
-                case "admin":
-                    Role adminRole=roleService.findByName(Constant.RoleName.ADMIN).orElseThrow(
+                    Role adminRole=roleService.findByName(Constant.RoleName.COMPANY).orElseThrow(
                             ()->new RuntimeException("Role not found")
                     );
                     roles.add(adminRole);
-                    break;
-                case "company":
-                    Role companyRole=roleService.findByName(Constant.RoleName.COMPANY).orElseThrow(
-                            ()->new RuntimeException("Role not found")
-                    );
-                    roles.add(companyRole);
-                    break;
-                default:
-                    Role userRole=roleService.findByName(Constant.RoleName.USER).orElseThrow(
-                            ()->new RuntimeException("Role not found"));
-                    roles.add(userRole);
-
-            }
-        });
         company.setRoles(roles);
+        company.setStatus(Constant.Status.UNLOCK);
+        company.setProposed(0);
         user.setRoles(roles);
         companyService.save(company);
         userService.save(user);
 
         return new ResponseEntity<>(new ResponMessage("Create company Account Success!"), HttpStatus.OK);
     }
-
-//    @PutMapping("/change-password")
-//    public ResponseEntity<?> changePassword(HttpServletRequest request, @Valid @RequestBody ChangePasswordForm changePasswordForm){
-//        String jwt = jwtTokenFilter.getJwt(request);
-//        String username = jwtProvider.getUserNameToken(jwt);
-//        User user;
-//        try {
-//            user = userService.findByUsername(username).orElseThrow(()-> new UsernameNotFoundException("User Not Found with -> username"+username));
-//            boolean matches = passwordEncoder.matches(changePasswordForm.getCurrentPassword(), user.getPassword());
-//            if(changePasswordForm.getNewPassword() != null){
-//                if(matches){
-//                    user.setPassword(passwordEncoder.encode(changePasswordForm.getNewPassword()));
-//                    userService.save(user);
-//                } else {
-//                    return new ResponseEntity<>(new ResponMessage("Can't change password"), HttpStatus.OK);
-//                }
-//            }
-//            return new ResponseEntity<>(new ResponMessage("Changed password"), HttpStatus.OK);
-//        } catch (UsernameNotFoundException exception){
-//            return new ResponseEntity<>(new ResponMessage(exception.getMessage()), HttpStatus.NOT_FOUND);
-//        }
-//    }
-//    @PutMapping("/change-avatar")
-//    public ResponseEntity<?> changeAvatar(HttpServletRequest request, @Valid @RequestBody ChangeAvatar changeAvatar){
-//        String jwt=jwtTokenFilter.getJwt(request);
-//        String username=jwtProvider.getUserNameToken(jwt);
-//   User user;
-//           try{
-//                if (changeAvatar.getAvatar()==null){
-//                    return new ResponseEntity<>(new ResponMessage("no avatar"),HttpStatus.OK);
-//                }else {
-//                    user=userService.findByUsername(username).orElseThrow(()->
-//                            new UsernameNotFoundException("Username not found -> username"+username));
-//               user.setAvatar(changeAvatar.getAvatar());
-//               userService.save(user);
-//                }
-//               return new ResponseEntity<>(new ResponMessage("success"),HttpStatus.OK);
-//
-//           }catch (UsernameNotFoundException exception){
-//               return new ResponseEntity<>(new ResponMessage(exception.getMessage()),HttpStatus.NOT_FOUND);
-//           }
-//    }
-//    @PutMapping("/change-profile")
-//    public ResponseEntity<?> changeProfile(HttpServletRequest request, @Valid @RequestBody ChangeProfileForm changeProfileForm){
-//        String jwt=jwtTokenFilter.getJwt(request);
-//        String username=jwtProvider.getUserNameToken(jwt);
-//        User user;
-//        try {
-//            if (userService.existsByUsername(changeProfileForm.getUsername())){
-//                return new ResponseEntity<>(new ResponMessage("no user"),HttpStatus.OK);
-//            }
-//            if (userService.existsByEmail(changeProfileForm.getEmail())){
-//                return new ResponseEntity<>(new ResponMessage("no email"),HttpStatus.OK);
-//
-//            }
-//            user=userService.findByUsername(username).orElseThrow(()->new UsernameNotFoundException("User not found with -> username"+username));
-//            user.setName(changeProfileForm.getName());
-//            user.setUsername(changeProfileForm.getUsername());
-//            user.setEmail(changeProfileForm.getEmail());
-//            userService.save(user);
-//            return new ResponseEntity<>(new ResponMessage("success!!!!!!"),HttpStatus.OK);
-//
-//        }catch (UsernameNotFoundException exception){
-//            return new ResponseEntity<>(new ResponMessage(exception.getMessage()),HttpStatus.NOT_FOUND);
-//        }
-//    }
-
 }
