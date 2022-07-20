@@ -18,6 +18,7 @@ public class User {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
     private String name;
+    private String username;
     private String email;
     private String password;
     private String phoneNumber;
@@ -26,4 +27,18 @@ public class User {
     @JoinColumn(name = "user_id"), inverseJoinColumns =
     @JoinColumn(name = "role_id"))
     Set<Role> roles = new HashSet<>();
+
+    public User(String name, String username, String email, String encode) {
+        this.name=name;
+        this.username=username;
+        this.email=email;
+        this.password=encode;
+    }
+    public User(String name, String username, String email,String phoneNumber, String encode) {
+        this.name=name;
+        this.username=username;
+        this.email=email;
+        this.phoneNumber=phoneNumber;
+        this.password=encode;
+    }
 }
