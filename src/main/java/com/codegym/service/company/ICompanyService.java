@@ -23,4 +23,6 @@ public interface ICompanyService extends IGeneralService<Company> {
 
     //kt xem email da co torng DB chua khi tao du lieu
     Boolean existsByEmail(String email);
+
+    Optional<Company> findByEmail(String email);
 }

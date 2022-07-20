@@ -83,4 +83,9 @@ public class CompanyService implements ICompanyService {
     public Boolean existsByEmail(String email) {
         return companyRepository.existsByEmail(email);
     }
+
+    @Override
+    public Optional<Company> findByEmail(String email) {
+        return companyRepository.findByEmail(email);
+    }
 }
