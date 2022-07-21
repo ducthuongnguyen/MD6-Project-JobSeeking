@@ -11,12 +11,17 @@ import com.codegym.model.entity.Company;
 import com.codegym.model.entity.Role;
 import com.codegym.model.entity.User;
 import com.codegym.repository.ICompanyRepository;
+import com.codegym.repository.IRoleRepository;
 import com.codegym.service.MailService;
 import com.codegym.utils.Const;
+import lombok.NonNull;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+import org.springframework.web.multipart.MultipartFile;
 
 import javax.mail.MessagingException;
 import javax.validation.ConstraintViolation;
@@ -104,7 +109,7 @@ public class CompanyService implements ICompanyService {
         return companyRepository.findByEmail(email);
     }
 
-    public Company create(@NonNull SignUpCompanyForm command, MultipartFile file){
+    public Company create(@NonNull SignUpCompanyForm command, MultipartFile file) {
         try {
             DataMailDTO dataMail = new DataMailDTO();
 
@@ -123,7 +128,7 @@ public class CompanyService implements ICompanyService {
         }
 
         Set<ConstraintViolation<SignUpCompanyForm>> constraintViolations = validator.validate(command);
-        if(!constraintViolations.isEmpty()) {
+        if (!constraintViolations.isEmpty()) {
             throw new ConstraintViolationException(constraintViolations);
         }
         if (companyRepository.existsByEmail(command.getEmail()))
@@ -139,15 +144,15 @@ public class CompanyService implements ICompanyService {
                 .phoneNumber(command.getPhoneNumber())
                 .introduction(command.getIntroduction())
                 .build();
-        String image=null;
+        String image = null;
         try {
             byte[] fileContent = file.getBytes();
             String outputFile = Base64.getEncoder().encodeToString(fileContent);
             String contentType = file.getContentType();
-            image="data:".concat(contentType).concat(";base64,").concat(outputFile);
+            image = "data:".concat(contentType).concat(";base64,").concat(outputFile);
 
         } catch (IOException e) {
-           log.info("Error in file get bytes ``", file);
+            log.info("Error in file get bytes ``", file);
         }
         company.setAvatar(image);
 
