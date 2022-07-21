@@ -79,7 +79,8 @@ public class RecruitmentNewsController {
 
     @PostMapping()
     public ResponseEntity<RecruitmentNews> saveRecruitmentNews(@RequestBody RecruitmentNews recruitmentNews) {
-
+        recruitmentNews.setProposed(Constant.Proposal.NO);
+        recruitmentNews.setStatus(UNLOCK);
         return new ResponseEntity<>(recruitmentNewsService.save(recruitmentNews), HttpStatus.OK);
     }
 
