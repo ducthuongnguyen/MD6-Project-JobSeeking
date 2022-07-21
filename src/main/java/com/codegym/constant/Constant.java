@@ -2,10 +2,10 @@ package com.codegym.constant;
 
 public interface Constant {
     public enum Gender {
-        Male,
-        Female,
-        Others,
-        All
+        Nam,
+        Nữ,
+        Khác,
+        Mọi_Giới_Tính
     }
 
     public enum RoleName {
