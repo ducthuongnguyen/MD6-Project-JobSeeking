@@ -4,6 +4,9 @@ import com.codegym.constant.Constant;
 import com.codegym.model.entity.Company;
 import com.codegym.service.company.ICompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -51,24 +54,21 @@ public class CompanyController {
         if (!companyOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        if (companyOptional.get().getStatus() == Constant.Status.LOCK) {
-            companyOptional.get().setStatus(Constant.Status.UNLOCK);
-        } else {
-            companyOptional.get().setStatus(Constant.Status.LOCK);
-        }
+        companyOptional.get().setApproval(Constant.Approval.YES);
+        companyOptional.get().setStatus(UNLOCK);
         companyService.save(companyOptional.get());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
-//    @GetMapping
-//    public ResponseEntity<Page<Company>> findAll(@PageableDefault(value = 1) Pageable pageable) {
-//        return new ResponseEntity<>(companyService.findAll(pageable), HttpStatus.OK);
-//    }
-
-    @GetMapping()
-    public ResponseEntity<Iterable<Company>> findAll() {
-        return new ResponseEntity<>(companyService.findAll(), HttpStatus.OK);
+    @GetMapping
+    public ResponseEntity<Page<Company>> findAll(Pageable pageable) {
+        return new ResponseEntity<>(companyService.findAll(pageable), HttpStatus.OK);
     }
+
+//    @GetMapping()
+//    public ResponseEntity<Iterable<Company>> findAll() {
+//        return new ResponseEntity<>(companyService.findAll(), HttpStatus.OK);
+//    }
 
     @PutMapping("/update-status/{id}")
     public ResponseEntity<Company> updateStatus(@PathVariable Long id) {
@@ -99,5 +99,29 @@ public class CompanyController {
     @GetMapping("/proposal-company")
     public ResponseEntity<Iterable<Company>> findAllProposedRecruitmentNews() {
         return new ResponseEntity<>(companyService.findAllProposedCompanies(), HttpStatus.OK);
+    }
+
+    //danh sach cong ty cho duyet
+    @GetMapping("/pending-company")
+    public ResponseEntity<Iterable<Company>> findAllPendingCompanies() {
+        return new ResponseEntity<>(companyService.findAllPendingCompanies(), HttpStatus.OK);
+    }
+
+    //danh sach cong ty da duyet
+    @GetMapping("/approved-company")
+    public ResponseEntity<Iterable<Company>> findAllApprovedCompanies() {
+        return new ResponseEntity<>(companyService.findAllApprovedCompanies(), HttpStatus.OK);
+    }
+
+    //danh sach cong ty khong khoa
+    @GetMapping("/unlock-company")
+    public ResponseEntity<Iterable<Company>> findAllUnlockCompanies() {
+        return new ResponseEntity<>(companyService.findAllUnlockCompanies(), HttpStatus.OK);
+    }
+
+    //danh sach cong ty bi khoa
+    @GetMapping("/locked-company")
+    public ResponseEntity<Iterable<Company>> findAllLockCompanies() {
+        return new ResponseEntity<>(companyService.findAllLockCompanies(), HttpStatus.OK);
     }
 }

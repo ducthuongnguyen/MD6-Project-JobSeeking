@@ -28,4 +28,9 @@ public interface Constant {
         YES,
         NO
     }
+
+    public enum Approval {
+        YES,
+        NO
+    }
 }
