@@ -111,6 +111,23 @@ public class CompanyService implements ICompanyService {
     }
 
     public Company create(@NonNull SignUpCompanyForm command, MultipartFile file){
+        try {
+            DataMailDTO dataMail = new DataMailDTO();
+
+            dataMail.setTo(command.getEmail());
+            dataMail.setSubject(Const.SEND_MAIL_SUBJECT.CLIENT_REGISTER);
+
+            Map<String, Object> props = new HashMap<>();
+            props.put("name", command.getName());
+            props.put("email", command.getEmail());
+            dataMail.setProps(props);
+
+            mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_REGISTER);
+
+        } catch (MessagingException exp) {
+            exp.printStackTrace();
+        }
+
         Set<ConstraintViolation<SignUpCompanyForm>> constraintViolations = validator.validate(command);
         if(!constraintViolations.isEmpty()) {
             throw new ConstraintViolationException(constraintViolations);
