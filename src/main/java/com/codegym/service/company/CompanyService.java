@@ -1,11 +1,8 @@
 package com.codegym.service.company;
 
 
-import com.codegym.model.entity.RecruitmentNews;
 import com.codegym.model.dto.DataMailDTO;
-import com.codegym.model.dto.response.CompanyResponse;
 import com.codegym.model.entity.Company;
-import com.codegym.model.entity.User;
 import com.codegym.repository.ICompanyRepository;
 import com.codegym.service.MailService;
 import com.codegym.utils.Const;
