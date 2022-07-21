@@ -90,6 +90,9 @@ public class RecruitmentNewsController {
         if (!recruitmentNewsOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        recruitmentNews.setStatus(recruitmentNewsOptional.get().getStatus());
+        recruitmentNews.setProposed(recruitmentNewsOptional.get().getProposed());
+        recruitmentNews.setCompany(recruitmentNewsOptional.get().getCompany());
         recruitmentNews.setId(id);
         recruitmentNewsService.save(recruitmentNews);
         return new ResponseEntity<>(HttpStatus.ACCEPTED);
