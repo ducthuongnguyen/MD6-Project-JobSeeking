@@ -22,6 +22,8 @@ public interface ICompanyRepository extends JpaRepository<Company, Long> {
     //tim kiem co ton tai trong DB khong
     Optional<Company> findByName(String name);
 
+    Optional<Company> findByEmail(String email);
+
     //kt xem user da co torng DB chua khi tao du lieu
     Boolean existsByName(String name);
 
