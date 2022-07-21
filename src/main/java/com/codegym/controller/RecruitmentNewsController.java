@@ -32,12 +32,6 @@ public class RecruitmentNewsController {
     IRecruitmentNewsService recruitmentNewsService;
 
     @Autowired
-    private JwtProvider jwtProvider;
-
-    @Autowired
-    private JwtTokenFilter jwtTokenFilter;
-
-    @Autowired
     private CompanyService companyService;
 
     @PutMapping("/update-status/{id}")
