@@ -19,6 +19,7 @@ import com.codegym.service.role.RoleServiceImpl;
 import com.codegym.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -115,7 +116,7 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(token, companyService.findByEmail(userPrinciple.getEmail()).get().getId(), userPrinciple.getName(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
     }
 
-    @PostMapping("/sign-up-company")
+    @PostMapping(value = "/sign-up-company", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MyResponseBody<?>> register(@Valid @RequestPart(value = "company") SignUpCompanyForm signUpCompanyForm, @RequestPart(value = "image", required = false) MultipartFile image) {
         ValidationErrorResponse error = new ValidationErrorResponse();
         try {
