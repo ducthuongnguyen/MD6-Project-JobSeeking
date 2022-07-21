@@ -48,6 +48,7 @@ public class RecruitmentNewsController {
         return new ResponseEntity<>(recruitmentNewsService.save(recruitmentNews.get()), HttpStatus.OK);
     }
 
+    //Danh sach tin tuyen dung duoc de xuat
     @GetMapping("/proposal-news")
     public ResponseEntity<Iterable<RecruitmentNews>> findAllProposedRecruitmentNews() {
         return new ResponseEntity<>(recruitmentNewsService.findAllProposedRecruitmentNews(), HttpStatus.OK);
@@ -78,6 +79,19 @@ public class RecruitmentNewsController {
 
     @PostMapping()
     public ResponseEntity<RecruitmentNews> saveRecruitmentNews(@RequestBody RecruitmentNews recruitmentNews) {
+
         return new ResponseEntity<>(recruitmentNewsService.save(recruitmentNews), HttpStatus.OK);
+    }
+
+    //danh sach tin tuyen dung bi khoa
+    @GetMapping("/locked-list")
+    public ResponseEntity<Iterable<RecruitmentNews>> findAllLockedRecruitmentNews() {
+        return new ResponseEntity<>(recruitmentNewsService.findAllLockedRecruitmentNews(), HttpStatus.OK);
+    }
+
+    //danh sach tin tuyen dung khong khoa
+    @GetMapping("/unlocked-list")
+    public ResponseEntity<Iterable<RecruitmentNews>> findAllUnlockRecruitmentNews() {
+        return new ResponseEntity<>(recruitmentNewsService.findAllUnlockRecruitmentNews(), HttpStatus.OK);
     }
 }

@@ -36,4 +36,14 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
     public Iterable<RecruitmentNews> findAllProposedRecruitmentNews() {
         return recruitmentNewsRepository.findAllProposedRecruitmentNews();
     }
+
+    @Override
+    public Iterable<RecruitmentNews> findAllLockedRecruitmentNews() {
+        return recruitmentNewsRepository.findAllLockedRecruitmentNews();
+    }
+
+    @Override
+    public Iterable<RecruitmentNews> findAllUnlockRecruitmentNews() {
+        return recruitmentNewsRepository.findAllUnlockRecruitmentNews();
+    }
 }
