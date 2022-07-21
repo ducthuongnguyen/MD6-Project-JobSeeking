@@ -165,6 +165,8 @@ public class CompanyService implements ICompanyService {
         company.setRoles(roles);
         company.setStatus(Constant.Status.UNLOCK);
         company.setProposed(Constant.Proposal.NO);
+        user.setRoles(roles);
+        userService.save(user);
         return companyRepository.save(company);
     }
 
