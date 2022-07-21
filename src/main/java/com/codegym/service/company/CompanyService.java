@@ -3,10 +3,9 @@ package com.codegym.service.company;
 
 import com.codegym.advice.CommonException;
 import com.codegym.constant.Constant;
+import com.codegym.model.dto.DataMailDTO;
 import com.codegym.model.dto.request.SignUpCompanyForm;
 import com.codegym.model.dto.response.Response;
-import com.codegym.model.entity.RecruitmentNews;
-import com.codegym.model.dto.DataMailDTO;
 import com.codegym.model.entity.Company;
 import com.codegym.model.entity.Role;
 import com.codegym.model.entity.User;
@@ -123,10 +122,7 @@ public class CompanyService implements ICompanyService {
             props.put("name", command.getName());
             props.put("email", command.getEmail());
             dataMail.setProps(props);
-
             mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_REGISTER);
-            long currentTime = System.currentTimeMillis();
-            System.out.println("Gửi email mất " + (startTime - currentTime) + " ms");
         } catch (MessagingException exp) {
             exp.printStackTrace();
         }
@@ -149,7 +145,7 @@ public class CompanyService implements ICompanyService {
                 .introduction(command.getIntroduction())
                 .build();
         User user = new User(command.getName(), command.getEmail(), command.getEmail(), command.getPhoneNumber(), passwordEncoder.encode(command.getPassword()));
-        String image=null;
+        String image = null;
         try {
             byte[] fileContent = file.getBytes();
             String outputFile = Base64.getEncoder().encodeToString(fileContent);
