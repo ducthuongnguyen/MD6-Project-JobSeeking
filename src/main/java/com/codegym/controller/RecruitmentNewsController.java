@@ -2,13 +2,22 @@ package com.codegym.controller;
 
 import com.codegym.constant.Constant;
 
+import com.codegym.model.entity.Company;
 import com.codegym.model.entity.RecruitmentNews;
+import com.codegym.security.jwt.JwtProvider;
+import com.codegym.security.jwt.JwtTokenFilter;
+import com.codegym.service.company.CompanyService;
 import com.codegym.service.recruitment_news.IRecruitmentNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
+import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
 import static com.codegym.constant.Constant.Status.LOCK;
@@ -21,6 +30,15 @@ import static com.codegym.constant.Constant.Status.UNLOCK;
 public class RecruitmentNewsController {
     @Autowired
     IRecruitmentNewsService recruitmentNewsService;
+
+    @Autowired
+    private JwtProvider jwtProvider;
+
+    @Autowired
+    private JwtTokenFilter jwtTokenFilter;
+
+    @Autowired
+    private CompanyService companyService;
 
     @PutMapping("/update-status/{id}")
     public ResponseEntity<RecruitmentNews> updateStatus(@PathVariable Long id) {
@@ -59,6 +77,11 @@ public class RecruitmentNewsController {
         return new ResponseEntity<>(recruitmentNews, HttpStatus.OK);
     }
 
+//    @GetMapping
+//    public ResponseEntity<Page<RecruitmentNews>> findAll(@PageableDefault(value = 2) Pageable pageable) {
+//        return new ResponseEntity<Page<RecruitmentNews>>(recruitmentNewsService.findAll(pageable), HttpStatus.OK);
+//    }
+
     @GetMapping("/{id}")
     public ResponseEntity<Optional<RecruitmentNews>> findById(@PathVariable Long id) {
         Optional<RecruitmentNews> recruitmentNews = recruitmentNewsService.findById(id);
@@ -79,5 +102,15 @@ public class RecruitmentNewsController {
     @PostMapping()
     public ResponseEntity<RecruitmentNews> saveRecruitmentNews(@RequestBody RecruitmentNews recruitmentNews) {
         return new ResponseEntity<>(recruitmentNewsService.save(recruitmentNews), HttpStatus.OK);
+    }
+
+    @GetMapping("/findAllByCompanyId/{id}")
+    public ResponseEntity<Iterable<RecruitmentNews>> findAllByCompanyId(HttpServletRequest request, @PathVariable Long id) {
+        Optional<Company> companyOptional = companyService.findById(id);
+        if (!companyOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<RecruitmentNews> recruitmentNews = recruitmentNewsService.findAllByCompany(companyOptional.get());
+        return new ResponseEntity<>(recruitmentNews, HttpStatus.OK);
     }
 }
