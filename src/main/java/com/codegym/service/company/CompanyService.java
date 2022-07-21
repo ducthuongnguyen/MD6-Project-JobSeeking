@@ -14,6 +14,7 @@ import com.codegym.model.entity.User;
 import com.codegym.repository.ICompanyRepository;
 import com.codegym.repository.IRoleRepository;
 import com.codegym.service.MailService;
+import com.codegym.service.user.UserService;
 import com.codegym.utils.Const;
 import lombok.NonNull;
 import lombok.extern.slf4j.Slf4j;
@@ -34,6 +35,8 @@ import java.util.*;
 @Service
 @Slf4j
 public class CompanyService implements ICompanyService {
+    @Autowired
+    private UserService userService;
     @Autowired
     private MailService mailService;
     @Autowired
@@ -112,6 +115,7 @@ public class CompanyService implements ICompanyService {
 
     public Company create(@NonNull SignUpCompanyForm command, MultipartFile file){
         try {
+            long startTime = System.currentTimeMillis();
             DataMailDTO dataMail = new DataMailDTO();
 
             dataMail.setTo(command.getEmail());
@@ -123,7 +127,8 @@ public class CompanyService implements ICompanyService {
             dataMail.setProps(props);
 
             mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_REGISTER);
-
+            long currentTime = System.currentTimeMillis();
+            System.out.println("Gửi email mất " + (startTime - currentTime) + " ms");
         } catch (MessagingException exp) {
             exp.printStackTrace();
         }
@@ -145,6 +150,7 @@ public class CompanyService implements ICompanyService {
                 .phoneNumber(command.getPhoneNumber())
                 .introduction(command.getIntroduction())
                 .build();
+        User user = new User(command.getName(), command.getEmail(), command.getEmail(), command.getPhoneNumber(), passwordEncoder.encode(command.getPassword()));
         String image=null;
         try {
             byte[] fileContent = file.getBytes();
@@ -165,6 +171,8 @@ public class CompanyService implements ICompanyService {
         company.setRoles(roles);
         company.setStatus(Constant.Status.UNLOCK);
         company.setProposed(Constant.Proposal.NO);
+        user.setRoles(roles);
+        userService.save(user);
         return companyRepository.save(company);
-    }
+   }
 }
