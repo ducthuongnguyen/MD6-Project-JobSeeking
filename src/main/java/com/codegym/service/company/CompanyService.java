@@ -85,4 +85,24 @@ public class CompanyService implements ICompanyService {
     public Optional<Company> findByEmail(String email) {
         return companyRepository.findByEmail(email);
     }
+
+    @Override
+    public Iterable<Company> findAllPendingCompanies() {
+        return companyRepository.findAllPendingCompanies();
+    }
+
+    @Override
+    public Iterable<Company> findAllApprovedCompanies() {
+        return companyRepository.findAllApprovedCompanies();
+    }
+
+    @Override
+    public Iterable<Company> findAllUnlockCompanies() {
+        return companyRepository.findAllUnlockCompanies();
+    }
+
+    @Override
+    public Iterable<Company> findAllLockCompanies() {
+        return companyRepository.findAllLockCompanies();
+    }
 }

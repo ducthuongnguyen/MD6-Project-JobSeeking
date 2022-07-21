@@ -45,6 +45,7 @@ public class Company {
     private String introduction;
     private Constant.Status status;
     private Constant.Proposal proposed;
+    private Constant.Approval approval;
     @ManyToMany(fetch = FetchType.EAGER)
     @JoinTable(name = "company_role", joinColumns =
     @JoinColumn(name = "company_id"), inverseJoinColumns =

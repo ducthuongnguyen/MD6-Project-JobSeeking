@@ -135,8 +135,9 @@ public class AuthController {
         );
         roles.add(adminRole);
         company.setRoles(roles);
-        company.setStatus(Constant.Status.UNLOCK);
+        company.setStatus(Constant.Status.LOCK);
         company.setProposed(Constant.Proposal.NO);
+        company.setApproval(Constant.Approval.NO);
         user.setRoles(roles);
         companyService.save(company);
         userService.save(user);
