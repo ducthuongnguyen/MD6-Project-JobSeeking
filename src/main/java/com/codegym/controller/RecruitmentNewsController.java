@@ -102,7 +102,7 @@ public class RecruitmentNewsController {
         return new ResponseEntity<>(recruitmentNewsService.save(recruitmentNews), HttpStatus.OK);
     }
 
-    @GetMapping("/findAllByCompanyId/{id}")
+    @GetMapping("/find-by-company/{id}")
     public ResponseEntity<Iterable<RecruitmentNews>> findAllByCompanyId(HttpServletRequest request, @PathVariable Long id) {
         Optional<Company> companyOptional = companyService.findById(id);
         if (!companyOptional.isPresent()) {
