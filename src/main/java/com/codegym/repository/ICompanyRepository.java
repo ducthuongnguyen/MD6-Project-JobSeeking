@@ -29,8 +29,10 @@ public interface ICompanyRepository extends JpaRepository<Company, Long> {
     Iterable<Company> findAllApprovedCompanies();
 
     //danh sach cong ty khong khoa
-    @Query(value = "select * from companies where status = 1;", nativeQuery = true)
-    Iterable<Company> findAllUnlockCompanies();
+    @Query(value = "select * from companies where status = 1",
+            countQuery = "SELECT count(*) FROM companies WHERE status = 1",
+            nativeQuery = true)
+    Page<Company> findAllUnlockCompanies(Pageable pageable);
 
     //danh sach cong ty bi khoa
     @Query(value = "select * from companies where status = 0;", nativeQuery = true)
