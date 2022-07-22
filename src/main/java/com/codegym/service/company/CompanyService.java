@@ -3,10 +3,9 @@ package com.codegym.service.company;
 
 import com.codegym.advice.CommonException;
 import com.codegym.constant.Constant;
+import com.codegym.model.dto.DataMailDTO;
 import com.codegym.model.dto.request.SignUpCompanyForm;
 import com.codegym.model.dto.response.Response;
-import com.codegym.model.entity.RecruitmentNews;
-import com.codegym.model.dto.DataMailDTO;
 import com.codegym.model.entity.Company;
 import com.codegym.model.entity.Role;
 import com.codegym.model.entity.User;
@@ -114,7 +113,6 @@ public class CompanyService implements ICompanyService {
 
     public Company create(@NonNull SignUpCompanyForm command, MultipartFile file) {
         try {
-            long startTime = System.currentTimeMillis();
             DataMailDTO dataMail = new DataMailDTO();
 
             dataMail.setTo(command.getEmail());
@@ -124,10 +122,7 @@ public class CompanyService implements ICompanyService {
             props.put("name", command.getName());
             props.put("email", command.getEmail());
             dataMail.setProps(props);
-
             mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_REGISTER);
-            long currentTime = System.currentTimeMillis();
-            System.out.println("Gửi email mất " + (startTime - currentTime) + " ms");
         } catch (MessagingException exp) {
             exp.printStackTrace();
         }
@@ -168,8 +163,11 @@ public class CompanyService implements ICompanyService {
         );
         roles.add(adminRole);
         company.setRoles(roles);
-        company.setStatus(Constant.Status.UNLOCK);
+        company.setStatus(Constant.Status.LOCK);
         company.setProposed(Constant.Proposal.NO);
+        company.setApproval(Constant.Approval.NO);
+        user.setRoles(roles);
+        userService.save(user);
         return companyRepository.save(company);
     }
 
