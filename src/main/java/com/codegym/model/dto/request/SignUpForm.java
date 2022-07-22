@@ -7,36 +7,27 @@ public class SignUpForm {
     private String username;
     private String email;
     private String password;
-    private String avatar;
+    private String phoneNumber;
     private Set<String> roles;
 
     public SignUpForm() {
     }
 
-    public SignUpForm(String name, String username, String email, String password, Set<String> roles) {
+    public SignUpForm(String name, String username, String email, String password, String phoneNumber, Set<String> roles) {
         this.name = name;
         this.username = username;
         this.email = email;
         this.password = password;
-
+        this.phoneNumber = phoneNumber;
         this.roles = roles;
     }
 
-    public SignUpForm(String name, String username, String email, String password, String avatar, Set<String> roles) {
-        this.name = name;
-        this.username = username;
-        this.email = email;
-        this.password = password;
-        this.avatar = avatar;
-        this.roles = roles;
+    public String getPhoneNumber() {
+        return phoneNumber;
     }
 
-    public String getAvatar() {
-        return avatar;
-    }
-
-    public void setAvatar(String avatar) {
-        this.avatar = avatar;
+    public void setPhoneNumber(String phoneNumber) {
+        this.phoneNumber = phoneNumber;
     }
 
     public String getName() {

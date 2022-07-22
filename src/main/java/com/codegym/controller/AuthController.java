@@ -62,34 +62,13 @@ public class AuthController {
         if (userService.existsByEmail(signUpForm.getEmail())) {
             return new ResponseEntity<>(new ResponMessage("no_email"), HttpStatus.OK);
         }
-
-        if (signUpForm.getAvatar() == null || signUpForm.getAvatar().trim().isEmpty()) {
-            signUpForm.setAvatar("https://firebasestorage.googleapis.com/v0/b/blog-eab4c.appspot.com/o/images%2Fth%20(1).jpg?alt=media&token=aff3ee5b-f7c2-419a-98bb-9dd3e48041bd");
-        }
-        User user = new User(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(), passwordEncoder.encode(signUpForm.getPassword()));
-        Set<String> strRoles = signUpForm.getRoles();
+        User user = new User(signUpForm.getName(), signUpForm.getUsername(), signUpForm.getEmail(),signUpForm.getPhoneNumber(), passwordEncoder.encode(signUpForm.getPassword()));
+//        Set<String> strRoles = signUpForm.getRoles();
         Set<Role> roles = new HashSet<>();
-        strRoles.forEach(role -> {
-            switch (role) {
-                case "admin":
-                    Role adminRole = roleService.findByName(Constant.RoleName.ADMIN).orElseThrow(
-                            () -> new RuntimeException("Role not found")
-                    );
-                    roles.add(adminRole);
-                    break;
-                case "company":
-                    Role companyRole = roleService.findByName(Constant.RoleName.COMPANY).orElseThrow(
-                            () -> new RuntimeException("Role not found")
-                    );
-                    roles.add(companyRole);
-                    break;
-                default:
-                    Role userRole = roleService.findByName(Constant.RoleName.USER).orElseThrow(
-                            () -> new RuntimeException("Role not found"));
-                    roles.add(userRole);
-
-            }
-        });
+        Role adminRole = roleService.findByName(Constant.RoleName.USER).orElseThrow(
+                () -> new RuntimeException("Role not found")
+        );
+        roles.add(adminRole);
         user.setRoles(roles);
         userService.save(user);
         return new ResponseEntity<>(new ResponMessage("Create User Account Success!"), HttpStatus.OK);
@@ -102,7 +81,7 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-        return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getId(), userPrinciple.getName(), userPrinciple.getUsername(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getId(), userPrinciple.getName(), userPrinciple.getUsername(), userPrinciple.getEmail(), userPrinciple.getAuthorities()));
     }
 
     @PostMapping("/sign-in-company")
@@ -113,7 +92,7 @@ public class AuthController {
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
 //        Company company = companyService.findByEmail(userPrinciple.getEmail()).get();
-        return ResponseEntity.ok(new JwtResponse(token, companyService.findByEmail(userPrinciple.getEmail()).get().getId(), userPrinciple.getName(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(token, companyService.findByEmail(userPrinciple.getEmail()).get().getId(), userPrinciple.getName(), userPrinciple.getEmail(), userPrinciple.getAuthorities()));
     }
 
     @PostMapping(value = "/sign-up-company", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
