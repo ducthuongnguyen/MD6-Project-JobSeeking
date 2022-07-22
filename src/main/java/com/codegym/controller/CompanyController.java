@@ -6,6 +6,7 @@ import com.codegym.service.company.ICompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
@@ -61,7 +62,7 @@ public class CompanyController {
     }
 
     @GetMapping
-    public ResponseEntity<Page<Company>> findAll(Pageable pageable) {
+    public ResponseEntity<Page<Company>> findAll(@PageableDefault(sort = "name",direction = Sort.Direction.ASC)Pageable pageable) {
         return new ResponseEntity<>(companyService.findAll(pageable), HttpStatus.OK);
     }
 
@@ -101,11 +102,12 @@ public class CompanyController {
         return new ResponseEntity<>(companyService.findAllProposedCompanies(), HttpStatus.OK);
     }
 
-    //danh sach cong ty cho duyet
+//    danh sach cong ty cho duyet
     @GetMapping("/pending-company")
     public ResponseEntity<Iterable<Company>> findAllPendingCompanies() {
         return new ResponseEntity<>(companyService.findAllPendingCompanies(), HttpStatus.OK);
     }
+
 
     //danh sach cong ty da duyet
     @GetMapping("/approved-company")

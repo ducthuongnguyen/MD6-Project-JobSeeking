@@ -30,6 +30,7 @@ public interface ICompanyService extends IGeneralService<Company> {
     //danh sach cong ty cho duyet
     Iterable<Company> findAllPendingCompanies();
 
+
     //danh sach cong ty da duyet
     Iterable<Company> findAllApprovedCompanies();
 

@@ -91,6 +91,8 @@ public class CompanyService implements ICompanyService {
         return companyRepository.findAllPendingCompanies();
     }
 
+
+
     @Override
     public Iterable<Company> findAllApprovedCompanies() {
         return companyRepository.findAllApprovedCompanies();
