@@ -1,7 +1,6 @@
 package com.codegym.controller;
 
 import com.codegym.constant.Constant;
-
 import com.codegym.model.entity.Company;
 import com.codegym.model.entity.RecruitmentNews;
 import com.codegym.security.jwt.JwtProvider;
@@ -9,12 +8,8 @@ import com.codegym.security.jwt.JwtTokenFilter;
 import com.codegym.service.company.CompanyService;
 import com.codegym.service.recruitment_news.IRecruitmentNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.data.domain.Page;
-import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -30,12 +25,6 @@ import static com.codegym.constant.Constant.Status.UNLOCK;
 public class RecruitmentNewsController {
     @Autowired
     IRecruitmentNewsService recruitmentNewsService;
-
-    @Autowired
-    private JwtProvider jwtProvider;
-
-    @Autowired
-    private JwtTokenFilter jwtTokenFilter;
 
     @Autowired
     private CompanyService companyService;

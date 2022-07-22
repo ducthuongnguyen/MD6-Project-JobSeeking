@@ -1,13 +1,14 @@
 package com.codegym.controller;
 
 
+import com.codegym.advice.CommonException;
+import com.codegym.advice.ValidationErrorResponse;
+import com.codegym.advice.Violation;
 import com.codegym.constant.Constant;
 import com.codegym.model.dto.request.SignInForm;
 import com.codegym.model.dto.request.SignUpCompanyForm;
 import com.codegym.model.dto.request.SignUpForm;
-import com.codegym.model.dto.response.JwtResponse;
-import com.codegym.model.dto.response.ResponMessage;
-import com.codegym.model.entity.Company;
+import com.codegym.model.dto.response.*;
 import com.codegym.model.entity.Role;
 import com.codegym.model.entity.User;
 import com.codegym.security.jwt.JwtProvider;
@@ -18,6 +19,7 @@ import com.codegym.service.role.RoleServiceImpl;
 import com.codegym.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
@@ -25,7 +27,10 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import javax.validation.ConstraintViolation;
+import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.HashSet;
 import java.util.Set;
@@ -111,37 +116,20 @@ public class AuthController {
         return ResponseEntity.ok(new JwtResponse(token, companyService.findByEmail(userPrinciple.getEmail()).get().getId(), userPrinciple.getName(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
     }
 
-    @PostMapping("/sign-up-company")
-    public ResponseEntity<?> register(@Valid @RequestBody SignUpCompanyForm signUpCompanyForm, SignUpForm signUpForm) {
-        if (companyService.existsByName(signUpCompanyForm.getName())) {
-            return new ResponseEntity<>(new ResponMessage("company name is existed"), HttpStatus.OK);
+    @PostMapping(value = "/sign-up-company", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<MyResponseBody<?>> register(@Valid @RequestPart(value = "company") SignUpCompanyForm signUpCompanyForm, @RequestPart(value = "image", required = false) MultipartFile image) {
+        ValidationErrorResponse error = new ValidationErrorResponse();
+        try {
+            return new ResponseEntity<>(new MyResponseBody(Response.SUCCESS, companyService.create(signUpCompanyForm, image )), HttpStatus.CREATED);
+        } catch (ConstraintViolationException e) {
+            for (ConstraintViolation c : e.getConstraintViolations()) {
+                error.getViolations().add(new Violation(c.getPropertyPath().toString(), c.getMessage()));
+            }
+            return new ResponseEntity<>(new MyResponseBody(Response.OBJECT_INVALID, error), HttpStatus.BAD_REQUEST);
+        } catch (CommonException e) {
+            return new ResponseEntity<>(new MyResponseBody(e.getResponse(), e.getMessage()), HttpStatus.BAD_REQUEST);
+        } catch (Exception e) {
+            return new ResponseEntity<>(new MyResponseBody(Response.SYSTEM_ERROR, e.getMessage()), HttpStatus.OK);
         }
-        if (companyService.existsByEmail(signUpCompanyForm.getEmail())) {
-            return new ResponseEntity<>(new ResponMessage("company email is existed"), HttpStatus.OK);
-        }
-        if (signUpForm.getAvatar() == null || signUpForm.getAvatar().trim().isEmpty()) {
-            signUpForm.setAvatar("https://firebasestorage.googleapis.com/v0/b/blog-eab4c.appspot.com/o/images%2Fth%20(1).jpg?alt=media&token=aff3ee5b-f7c2-419a-98bb-9dd3e48041bd");
-        }
-        if (signUpCompanyForm.getAvatar() == null || signUpCompanyForm.getAvatar().trim().isEmpty()) {
-            signUpCompanyForm.setAvatar("https://firebasestorage.googleapis.com/v0/b/blog-eab4c.appspot.com/o/images%2Fth%20(1).jpg?alt=media&token=aff3ee5b-f7c2-419a-98bb-9dd3e48041bd");
-        }
-        Company company = new Company(signUpCompanyForm.getName(), signUpCompanyForm.getEmail(), passwordEncoder.encode(signUpCompanyForm.getPassword()), signUpCompanyForm.getAvatar(), signUpCompanyForm.getAddress(),
-                signUpCompanyForm.getPhoneNumber(), signUpCompanyForm.getIntroduction(), signUpCompanyForm.getStatus(), signUpCompanyForm.getProposed());
-        User user = new User(signUpCompanyForm.getName(), signUpCompanyForm.getEmail(), signUpCompanyForm.getEmail(), signUpCompanyForm.getPhoneNumber(), passwordEncoder.encode(signUpCompanyForm.getPassword()));
-        Set<String> strRoles = signUpCompanyForm.getRoles();
-        Set<Role> roles = new HashSet<>();
-        Role adminRole = roleService.findByName(Constant.RoleName.COMPANY).orElseThrow(
-                () -> new RuntimeException("Role not found")
-        );
-        roles.add(adminRole);
-        company.setRoles(roles);
-        company.setStatus(Constant.Status.LOCK);
-        company.setProposed(Constant.Proposal.NO);
-        company.setApproval(Constant.Approval.NO);
-        user.setRoles(roles);
-        companyService.save(company);
-        userService.save(user);
-
-        return new ResponseEntity<>(new ResponMessage("Create company Account Success!"), HttpStatus.OK);
     }
 }
