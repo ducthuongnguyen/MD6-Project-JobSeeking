@@ -144,7 +144,6 @@ public class CompanyService implements ICompanyService {
                 .phoneNumber(command.getPhoneNumber())
                 .introduction(command.getIntroduction())
                 .build();
-//        User user = new User(command.getName(), command.getEmail(), command.getEmail(), command.getPhoneNumber(), passwordEncoder.encode(command.getPassword()));
         String image = null;
         try {
             byte[] fileContent = file.getBytes();
@@ -166,8 +165,6 @@ public class CompanyService implements ICompanyService {
         company.setStatus(Constant.Status.Khóa);
         company.setProposed(Constant.Proposal.Không);
         company.setApproval(Constant.Approval.NO);
-//        user.setRoles(roles);
-//        userService.save(user);
         return companyRepository.save(company);
     }
 
