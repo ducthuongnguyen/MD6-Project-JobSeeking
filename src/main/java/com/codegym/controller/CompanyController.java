@@ -2,13 +2,16 @@ package com.codegym.controller;
 
 import com.codegym.constant.Constant;
 import com.codegym.model.entity.Company;
+import com.codegym.model.entity.User;
 import com.codegym.service.company.ICompanyService;
+import com.codegym.service.user.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
@@ -22,6 +25,10 @@ import static com.codegym.constant.Constant.Status.UNLOCK;
 public class CompanyController {
     @Autowired
     private ICompanyService companyService;
+    @Autowired
+    private PasswordEncoder passwordEncoder;
+    @Autowired
+    private UserService userService;
 
     @GetMapping("/{id}")
     public ResponseEntity<Company> findById(@PathVariable Long id) {
@@ -54,8 +61,11 @@ public class CompanyController {
         if (!companyOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        User user = new User(companyOptional.get().getName(), companyOptional.get().getEmail(), companyOptional.get().getEmail(), companyOptional.get().getPhoneNumber(), passwordEncoder.encode(companyOptional.get().getPassword()));
         companyOptional.get().setApproval(Constant.Approval.YES);
         companyOptional.get().setStatus(UNLOCK);
+        user.setRoles(companyOptional.get().getRoles());
+        userService.save(user);
         companyService.save(companyOptional.get());
         return new ResponseEntity<>(HttpStatus.OK);
     }
