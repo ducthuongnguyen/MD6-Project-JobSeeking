@@ -92,14 +92,14 @@ public class AuthController {
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
 //        Company company = companyService.findByEmail(userPrinciple.getEmail()).get();
-        return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getId(), userPrinciple.getName(),userPrinciple.getUsername(),userPrinciple.getEmail(),userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+        return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getId(), userPrinciple.getName(), userPrinciple.getUsername(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
     }
 
     @PostMapping(value = "/sign-up-company", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<MyResponseBody<?>> register(@Valid @RequestPart(value = "company") SignUpCompanyForm signUpCompanyForm, @RequestPart(value = "image", required = false) MultipartFile image) {
         ValidationErrorResponse error = new ValidationErrorResponse();
         try {
-            return new ResponseEntity<>(new MyResponseBody(Response.SUCCESS, companyService.create(signUpCompanyForm, image )), HttpStatus.CREATED);
+            return new ResponseEntity<>(new MyResponseBody(Response.SUCCESS, companyService.create(signUpCompanyForm, image)), HttpStatus.CREATED);
         } catch (ConstraintViolationException e) {
             for (ConstraintViolation c : e.getConstraintViolations()) {
                 error.getViolations().add(new Violation(c.getPropertyPath().toString(), c.getMessage()));
