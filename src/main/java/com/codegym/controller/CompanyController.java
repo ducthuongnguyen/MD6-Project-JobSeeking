@@ -3,6 +3,7 @@ package com.codegym.controller;
 import com.codegym.constant.Constant;
 import com.codegym.model.entity.Company;
 import com.codegym.service.company.ICompanyService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -10,7 +11,10 @@ import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Optional;
 
 import static com.codegym.constant.Constant.Status.LOCK;
@@ -19,6 +23,7 @@ import static com.codegym.constant.Constant.Status.UNLOCK;
 @RestController
 @RequestMapping("/companies")
 @CrossOrigin("*")
+@Slf4j
 public class CompanyController {
     @Autowired
     private ICompanyService companyService;
@@ -33,11 +38,22 @@ public class CompanyController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<Company> update(@PathVariable Long id, @RequestBody Company company) {
+    public ResponseEntity<Company> update(@PathVariable Long id, @RequestBody Company company, MultipartFile file) {
         Optional<Company> companyOptional = companyService.findById(id);
         if (!companyOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        String image = null;
+        try {
+            byte[] fileContent = file.getBytes();
+            String outputFile = Base64.getEncoder().encodeToString(fileContent);
+            String contentType = file.getContentType();
+            image = "data:".concat(contentType).concat(";base64,").concat(outputFile);
+
+        } catch (IOException e) {
+            log.info("Error in file get bytes ``", file);
+        }
+        company.setAvatar(image);
         company.setId(companyOptional.get().getId());
         company.setEmail(companyOptional.get().getEmail());
         company.setPassword(companyOptional.get().getPassword());
