@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 
+import java.util.List;
+
 public interface IRecruitmentNewsService extends IGeneralService<RecruitmentNews> {
     Iterable<RecruitmentNews> findAllProposedRecruitmentNews();
 
@@ -18,4 +20,7 @@ public interface IRecruitmentNewsService extends IGeneralService<RecruitmentNews
 
     // danh sach tuyen dung khong khoa
     Iterable<RecruitmentNews> findAllUnlockRecruitmentNews();
+//tim kiem nhanh theo ten linh vuc noi lam viec luong nho nhat
+Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlaceContaining(String title,String workingplace);
+
 }
