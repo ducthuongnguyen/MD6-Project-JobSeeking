@@ -1,6 +1,7 @@
 package com.codegym.controller;
 
 import com.codegym.constant.Constant;
+import com.codegym.model.dto.response.ResponMessage;
 import com.codegym.model.entity.Company;
 import com.codegym.model.entity.RecruitmentNews;
 import com.codegym.service.company.CompanyService;
@@ -8,6 +9,7 @@ import com.codegym.service.recruitment_news.IRecruitmentNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
@@ -74,7 +76,7 @@ public class RecruitmentNewsController {
     }
 
     @PutMapping("/{id}")
-    public ResponseEntity<RecruitmentNews> updateRecruitmentNews(@RequestBody RecruitmentNews recruitmentNews, @PathVariable Long id) {
+    public ResponseEntity<?> updateRecruitmentNews(@RequestBody RecruitmentNews recruitmentNews, @PathVariable Long id) {
         Optional<RecruitmentNews> recruitmentNewsOptional = recruitmentNewsService.findById(id);
         if (!recruitmentNewsOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -84,14 +86,27 @@ public class RecruitmentNewsController {
         recruitmentNews.setCompany(recruitmentNewsOptional.get().getCompany());
         recruitmentNews.setId(id);
         recruitmentNewsService.save(recruitmentNews);
-        return new ResponseEntity<>(HttpStatus.ACCEPTED);
+        return new ResponseEntity<>(new ResponMessage("Cập nhật tin tuyển dụng thành công!!"),HttpStatus.ACCEPTED);
     }
 
     @PostMapping()
-    public ResponseEntity<RecruitmentNews> saveRecruitmentNews(@RequestBody RecruitmentNews recruitmentNews) {
+    public ResponseEntity<?> saveRecruitmentNews(@RequestBody RecruitmentNews recruitmentNews) {
+        if (recruitmentNews.getTitle()==""){
+            return new ResponseEntity<>( new ResponMessage("Hãy điền tên tiêu đề!!"), HttpStatus.OK);
+        }
+        if (recruitmentNews.getField().getId()==null){
+            return new ResponseEntity<>( new ResponMessage("Hãy điền tên lĩnh vực đang làm!!"), HttpStatus.OK);
+        }
+        if (recruitmentNews.getWorkingPlace()==""){
+            return new ResponseEntity<>( new ResponMessage("Hãy điền nơi làm việc!!"), HttpStatus.OK);
+        }
+        if (recruitmentNews.getSalaryFrom()==null){
+            return new ResponseEntity<>( new ResponMessage("Hãy điền mức lương khởi điểm!!"), HttpStatus.OK);
+        }
         recruitmentNews.setProposed(Constant.Proposal.Không);
         recruitmentNews.setStatus(Mở);
-        return new ResponseEntity<>(recruitmentNewsService.save(recruitmentNews), HttpStatus.OK);
+        recruitmentNewsService.save(recruitmentNews);
+        return new ResponseEntity<>(new ResponMessage("Thêm tim tuyển dụng thành công!!"), HttpStatus.OK);
     }
 
     @GetMapping("/find-by-company/{id}")
@@ -117,11 +132,23 @@ public class RecruitmentNewsController {
     }
 
     //tim kiem nhanh theo ten linh vuc noi lam viec luong nho nhat
+//    @GetMapping("/q-search")
+//    public ResponseEntity<Iterable<RecruitmentNews>> searchAllRecruitmentNews(@RequestParam("title") String title,@RequestParam("workingplace") String place) {
+//       if (title.equals("")){
+//           title=place;
+//       }
+//        return new ResponseEntity<>(recruitmentNewsService.findAllByTitleContainingAndWorkingPlaceContaining(title, place), HttpStatus.OK);
+//    }
+
+
+//    @GetMapping("/q-search")
+//    public ResponseEntity<Iterable<RecruitmentNews>> searchAllRecruitmentNews(@RequestParam("title") String title) {
+//
+//        return new ResponseEntity<>(recruitmentNewsService.findAllByTitleContaining(title), HttpStatus.OK);
+
     @GetMapping("/q-search")
-    public ResponseEntity<Iterable<RecruitmentNews>> searchAllRecruitmentNews(@RequestParam("title") String title,@RequestParam("workingplace") String place) {
-       if (title.equals("")){
-           title=place;
-       }
-        return new ResponseEntity<>(recruitmentNewsService.findAllByTitleContainingAndWorkingPlaceContaining(title, place), HttpStatus.OK);
+    public ResponseEntity<Iterable<RecruitmentNews>> searchAllRecruitmentNews(@RequestParam("title") String title) {
+        return new ResponseEntity<>(recruitmentNewsService.findAllRecruitmentNews('%' +title +'%'), HttpStatus.OK);
+
     }
 }
