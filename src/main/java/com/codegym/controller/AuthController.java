@@ -9,6 +9,7 @@ import com.codegym.model.dto.request.SignInForm;
 import com.codegym.model.dto.request.SignUpCompanyForm;
 import com.codegym.model.dto.request.SignUpForm;
 import com.codegym.model.dto.response.*;
+import com.codegym.model.entity.Company;
 import com.codegym.model.entity.Role;
 import com.codegym.model.entity.User;
 import com.codegym.security.jwt.JwtProvider;
@@ -33,6 +34,7 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @CrossOrigin("*")
@@ -131,5 +133,9 @@ public class AuthController {
         } catch (Exception e) {
             return new ResponseEntity<>(new MyResponseBody(Response.SYSTEM_ERROR, e.getMessage()), HttpStatus.OK);
         }
+    }
+    @GetMapping("/search")
+    public ResponseEntity<Optional<Company>> findByEmail(@RequestParam String email) {
+        return new ResponseEntity<>(companyService.findByEmail(email), HttpStatus.OK);
     }
 }
