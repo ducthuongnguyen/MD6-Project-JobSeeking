@@ -2,6 +2,7 @@ package com.codegym.controller;
 
 import com.codegym.constant.Constant;
 import com.codegym.model.entity.Company;
+import com.codegym.model.entity.Role;
 import com.codegym.model.entity.User;
 import com.codegym.service.company.ICompanyService;
 import com.codegym.service.user.UserService;
@@ -14,7 +15,9 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashSet;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.codegym.constant.Constant.Status.LOCK;
 import static com.codegym.constant.Constant.Status.UNLOCK;
@@ -64,9 +67,13 @@ public class CompanyController {
         User user = new User(companyOptional.get().getName(), companyOptional.get().getEmail(), companyOptional.get().getEmail(), companyOptional.get().getPhoneNumber(), passwordEncoder.encode(companyOptional.get().getPassword()));
         companyOptional.get().setApproval(Constant.Approval.YES);
         companyOptional.get().setStatus(UNLOCK);
-        user.setRoles(companyOptional.get().getRoles());
+        Company companySave = companyOptional.get();
+        companyService.save(companySave);
+        Set<Role> rolesCompany = companySave.getRoles();
+        Set<Role> roles=new HashSet<>();
+        roles.addAll(rolesCompany);
+        user.setRoles(roles);
         userService.save(user);
-        companyService.save(companyOptional.get());
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
