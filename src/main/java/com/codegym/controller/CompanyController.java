@@ -61,8 +61,12 @@ public class CompanyController {
         company.setStatus(companyOptional.get().getStatus());
         company.setProposed(companyOptional.get().getProposed());
         company.setRoles(companyOptional.get().getRoles());
+        company.setApproval(companyOptional.get().getApproval());
         companyService.save(company);
         return new ResponseEntity<>(HttpStatus.OK);
+//        tạm thời là xong. Nhưng mà còn 1 số logic khác ở udpdate
+//        chị test trên FE hộ e với ạ, e vừa edit đc rồi xong lúc sau lại k đc , e k hiểu tại sao ạ
+//    mở đi
     }
 
     @PutMapping("/approve/{id}")

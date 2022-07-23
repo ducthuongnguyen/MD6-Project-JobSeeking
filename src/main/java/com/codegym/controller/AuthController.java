@@ -9,6 +9,7 @@ import com.codegym.model.dto.request.SignInForm;
 import com.codegym.model.dto.request.SignUpCompanyForm;
 import com.codegym.model.dto.request.SignUpForm;
 import com.codegym.model.dto.response.*;
+import com.codegym.model.entity.Company;
 import com.codegym.model.entity.Role;
 import com.codegym.model.entity.User;
 import com.codegym.security.jwt.JwtProvider;
@@ -17,11 +18,13 @@ import com.codegym.security.userprincal.UserPrinciple;
 import com.codegym.service.company.CompanyService;
 import com.codegym.service.role.RoleServiceImpl;
 import com.codegym.service.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.BadCredentialsException;
 import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -33,11 +36,13 @@ import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 
 @CrossOrigin("*")
 @RequestMapping("")
 @RestController
+@Slf4j
 public class AuthController {
     @Autowired
     UserService userService;
@@ -107,13 +112,30 @@ public class AuthController {
 
     @PostMapping("/sign-in-company")
     public ResponseEntity<?> login1(@Valid @RequestBody SignUpCompanyForm signUpCompanyForm) {
-        Authentication authentication = authenticationManager.authenticate(
-                new UsernamePasswordAuthenticationToken(signUpCompanyForm.getEmail(), signUpCompanyForm.getPassword()));
-        SecurityContextHolder.getContext().setAuthentication(authentication);
-        String token = jwtProvider.createToken(authentication);
-        UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
+        Optional<Company> companyOptional = companyService.findByEmail(signUpCompanyForm.getEmail());
+        try {
+            Authentication authentication = authenticationManager.authenticate(
+                    new UsernamePasswordAuthenticationToken(signUpCompanyForm.getEmail(), signUpCompanyForm.getPassword()));
+            SecurityContextHolder.getContext().setAuthentication(authentication);
+            String token = jwtProvider.createToken(authentication);
+            UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
 //        Company company = companyService.findByEmail(userPrinciple.getEmail()).get();
-        return ResponseEntity.ok(new JwtResponse(token, companyService.findByEmail(userPrinciple.getEmail()).get().getId(), userPrinciple.getName(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+            return ResponseEntity.ok(new JwtResponse(token, companyService.findByEmail(userPrinciple.getEmail()).get().getId(), userPrinciple.getName(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+        } catch (BadCredentialsException e){
+            log.info("Lỗi authen rồi", e.getMessage());
+            if(!companyOptional.isPresent()){
+                return new ResponseEntity<>(new MyResponseBody(Response.USERNAME_NOT_FOUND, null), HttpStatus.BAD_REQUEST);
+            } else {
+                String encodedPassword = companyOptional.get().getPassword();
+                if(!passwordEncoder.matches(signUpCompanyForm.getPassword(), encodedPassword)){
+                    return new ResponseEntity<>(new MyResponseBody(Response.PASSWORD_INCORRECT, null), HttpStatus.BAD_REQUEST);
+                }
+                return new ResponseEntity<>(new MyResponseBody<>(Response.OBJECT_NOT_FOUND, null), HttpStatus.FORBIDDEN);
+            }
+        }
+//        Email là duy nhất mà, sao DB nhiều email hương vậy--> lõi
+        //nãy e vẫn đăng nhập bt e k hiểu sao lại có thêm trong db vậy nữa .
+       // Đứa nào register( rồi). xóa đi
     }
 
     @PostMapping(value = "/sign-up-company", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
