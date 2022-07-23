@@ -88,7 +88,6 @@ public class RecruitmentNewsController {
     }
 
     @PostMapping()
-    @PostMapping()
     public ResponseEntity<?> saveRecruitmentNews(@RequestBody RecruitmentNews recruitmentNews) {
         if (recruitmentNews.getTitle() == "") {
             return new ResponseEntity<>(new ResponMessage("Hãy điền tên tiêu đề!!"), HttpStatus.OK);
@@ -132,11 +131,11 @@ public class RecruitmentNewsController {
     }
 
     //tim kiem nhanh theo ten linh vuc noi lam viec luong nho nhat
-    @GetMapping("/q-search")
-    public ResponseEntity<Iterable<RecruitmentNews>> searchAllRecruitmentNews(@RequestParam("title") String title, @RequestParam("workingplace") String place) {
-        if (title.equals("")) {
-            title = place;
-        }
-        return new ResponseEntity<>(recruitmentNewsService.findAllByTitleContainingAndWorkingPlaceContaining(title, place), HttpStatus.OK);
-    }
+//    @GetMapping("/q-search")
+//    public ResponseEntity<Iterable<RecruitmentNews>> searchAllRecruitmentNews(@RequestParam("title") String title, @RequestParam("workingplace") String place) {
+//        if (title.equals("")) {
+//            title = place;
+//        }
+//        return new ResponseEntity<>(recruitmentNewsService.findAllByTitleContainingAndWorkingPlaceContaining(title, place), HttpStatus.OK);
+//    }
 }
