@@ -140,9 +140,15 @@ public class RecruitmentNewsController {
 //        return new ResponseEntity<>(recruitmentNewsService.findAllByTitleContainingAndWorkingPlaceContaining(title, place), HttpStatus.OK);
 //    }
 
+
+//    @GetMapping("/q-search")
+//    public ResponseEntity<Iterable<RecruitmentNews>> searchAllRecruitmentNews(@RequestParam("title") String title) {
+//
+//        return new ResponseEntity<>(recruitmentNewsService.findAllByTitleContaining(title), HttpStatus.OK);
+
     @GetMapping("/q-search")
     public ResponseEntity<Iterable<RecruitmentNews>> searchAllRecruitmentNews(@RequestParam("title") String title) {
+        return new ResponseEntity<>(recruitmentNewsService.findAllRecruitmentNews('%' +title +'%'), HttpStatus.OK);
 
-        return new ResponseEntity<>(recruitmentNewsService.findAllByTitleContaining(title), HttpStatus.OK);
     }
 }

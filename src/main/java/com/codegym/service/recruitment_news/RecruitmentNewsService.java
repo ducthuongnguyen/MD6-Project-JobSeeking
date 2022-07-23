@@ -54,10 +54,22 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
         return recruitmentNewsRepository.findAllByCompany(company);
     }
 
+
     public Iterable<RecruitmentNews> findAllByTitleContaining(String title) {
         return recruitmentNewsRepository.findAllByTitleContaining(title);
     }
     //    public Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlaceContaining(String title, String workingplace) {
+
+    @Override
+    public Iterable<RecruitmentNews> findAllRecruitmentNews(String title) {
+        return recruitmentNewsRepository.findAllRecruitmentNews(title);
+    }
+    //
+//    public Iterable<RecruitmentNews> findAllByTitleContaining(String title) {
+//        return recruitmentNewsRepository.findAllByTitleContaining(title);
+//    }
+//    public Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlaceContaining(String title, String workingplace) {
+
 //        return recruitmentNewsRepository.findAllByTitleContainingAndWorkingPlaceContaining(title, workingplace);
 //    }
 

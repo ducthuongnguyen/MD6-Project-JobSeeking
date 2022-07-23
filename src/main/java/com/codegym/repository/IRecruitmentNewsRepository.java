@@ -5,6 +5,7 @@ import com.codegym.model.entity.Field;
 import com.codegym.model.entity.RecruitmentNews;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
+import org.springframework.data.repository.query.Param;
 import org.springframework.stereotype.Repository;
 
 import java.util.List;
@@ -24,7 +25,15 @@ public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNew
 
     Iterable<RecruitmentNews> findAllByCompany(Company company);
 
+
     //    Page<RecruitmentNews> findAll(Pageable pageable);
 //    Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlaceContaining(String title,String workingplace);
     Iterable<RecruitmentNews> findAllByTitleContaining(String title);
+
+//    Page<RecruitmentNews> findAll(Pageable pageable);
+//    Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlaceContaining(String title,String workingplace);
+//Iterable<RecruitmentNews> findAllByTitleContaining(String title);
+@Query (value ="select * from recruitment_news  where title like concat('%', :title, '%') and field.name like concat('%', :title, '%') and workingPlace like concat('%', :title, '%')", nativeQuery = true)
+Iterable<RecruitmentNews> findAllRecruitmentNews(@Param("title") String title);
+
 }
