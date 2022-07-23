@@ -163,8 +163,8 @@ public class CompanyService implements ICompanyService {
         );
         roles.add(adminRole);
         company.setRoles(roles);
-        company.setStatus(Constant.Status.LOCK);
-        company.setProposed(Constant.Proposal.NO);
+        company.setStatus(Constant.Status.Khóa);
+        company.setProposed(Constant.Proposal.Không);
         company.setApproval(Constant.Approval.NO);
         user.setRoles(roles);
         userService.save(user);
@@ -182,8 +182,8 @@ public class CompanyService implements ICompanyService {
     }
 
     @Override
-    public Page<Company> findAllUnlockCompanies(Pageable pageable) {
-        return companyRepository.findAllUnlockCompanies(pageable);
+    public Iterable<Company> findAllUnlockCompanies() {
+        return companyRepository.findAllUnlockCompanies();
     }
 
     @Override

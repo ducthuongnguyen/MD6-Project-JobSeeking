@@ -3,8 +3,6 @@ package com.codegym.controller;
 import com.codegym.constant.Constant;
 import com.codegym.model.entity.Company;
 import com.codegym.model.entity.RecruitmentNews;
-import com.codegym.security.jwt.JwtProvider;
-import com.codegym.security.jwt.JwtTokenFilter;
 import com.codegym.service.company.CompanyService;
 import com.codegym.service.recruitment_news.IRecruitmentNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,8 +13,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.servlet.http.HttpServletRequest;
 import java.util.Optional;
 
-import static com.codegym.constant.Constant.Status.LOCK;
-import static com.codegym.constant.Constant.Status.UNLOCK;
+import static com.codegym.constant.Constant.Status.Khóa;
+import static com.codegym.constant.Constant.Status.Mở;
 
 
 @RestController
@@ -35,9 +33,9 @@ public class RecruitmentNewsController {
         if (!recruitmentNewsOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            if (recruitmentNewsOptional.get().getStatus().equals(LOCK)) {
-                recruitmentNewsOptional.get().setStatus(UNLOCK);
-            } else recruitmentNewsOptional.get().setStatus(LOCK);
+            if (recruitmentNewsOptional.get().getStatus().equals(Khóa)) {
+                recruitmentNewsOptional.get().setStatus(Mở);
+            } else recruitmentNewsOptional.get().setStatus(Khóa);
         }
         return new ResponseEntity<>(recruitmentNewsService.save(recruitmentNewsOptional.get()), HttpStatus.OK);
     }
@@ -48,9 +46,9 @@ public class RecruitmentNewsController {
         if (!recruitmentNews.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            if (recruitmentNews.get().getProposed().equals(Constant.Proposal.NO)) {
-                recruitmentNews.get().setProposed(Constant.Proposal.YES);
-            } else recruitmentNews.get().setProposed(Constant.Proposal.NO);
+            if (recruitmentNews.get().getProposed().equals(Constant.Proposal.Không)) {
+                recruitmentNews.get().setProposed(Constant.Proposal.Có);
+            } else recruitmentNews.get().setProposed(Constant.Proposal.Không);
         }
         return new ResponseEntity<>(recruitmentNewsService.save(recruitmentNews.get()), HttpStatus.OK);
     }
@@ -89,8 +87,8 @@ public class RecruitmentNewsController {
 
     @PostMapping()
     public ResponseEntity<RecruitmentNews> saveRecruitmentNews(@RequestBody RecruitmentNews recruitmentNews) {
-        recruitmentNews.setProposed(Constant.Proposal.NO);
-        recruitmentNews.setStatus(UNLOCK);
+        recruitmentNews.setProposed(Constant.Proposal.Không);
+        recruitmentNews.setStatus(Mở);
         return new ResponseEntity<>(recruitmentNewsService.save(recruitmentNews), HttpStatus.OK);
     }
 

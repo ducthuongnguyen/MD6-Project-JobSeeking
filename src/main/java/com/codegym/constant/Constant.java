@@ -15,8 +15,8 @@ public interface Constant {
     }
 
     public enum Status {
-        LOCK,
-        UNLOCK
+        Khóa,
+        Mở
     }
 
     public enum WorkingType {
@@ -25,8 +25,8 @@ public interface Constant {
     }
 
     public enum Proposal {
-        YES,
-        NO
+        Có,
+        Không
     }
 
     public enum Approval {

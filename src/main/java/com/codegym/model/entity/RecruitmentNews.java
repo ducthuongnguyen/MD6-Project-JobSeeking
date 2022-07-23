@@ -26,26 +26,15 @@ public class RecruitmentNews {
     private Vacancy vacancy;
     @ManyToOne
     private Field field;
-    @NotBlank
     private Integer salaryFrom;
-    @NotBlank
     private Integer salaryTo;
-    @NotBlank
     private LocalDate expiredDate;
-    @NotBlank
     private Integer employeeQuantity;
-    @NotBlank
     private Double requiredExperience;
-    @NotBlank
     private Constant.Gender gender;
-    @NotBlank
     private String workingPlace;
-    @NotBlank
     private String description;
-    @NotBlank
     private Constant.Status status;
-    @NotBlank
     private Constant.Proposal proposed;
-    @NotBlank
     private Constant.WorkingType workingType;
 }

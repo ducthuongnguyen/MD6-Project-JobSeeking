@@ -6,15 +6,14 @@ import com.codegym.service.company.ICompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
-import org.springframework.data.web.PageableDefault;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.Optional;
 
-import static com.codegym.constant.Constant.Status.LOCK;
-import static com.codegym.constant.Constant.Status.UNLOCK;
+import static com.codegym.constant.Constant.Status.Khóa;
+import static com.codegym.constant.Constant.Status.Mở;
 
 @RestController
 @RequestMapping("/companies")
@@ -55,7 +54,7 @@ public class CompanyController {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
         companyOptional.get().setApproval(Constant.Approval.YES);
-        companyOptional.get().setStatus(UNLOCK);
+        companyOptional.get().setStatus(Mở);
         companyService.save(companyOptional.get());
         return new ResponseEntity<>(HttpStatus.OK);
     }
@@ -76,9 +75,9 @@ public class CompanyController {
         if (!companyOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            if (companyOptional.get().getStatus().equals(LOCK)) {
-                companyOptional.get().setStatus(UNLOCK);
-            } else companyOptional.get().setStatus(LOCK);
+            if (companyOptional.get().getStatus().equals(Khóa)) {
+                companyOptional.get().setStatus(Mở);
+            } else companyOptional.get().setStatus(Khóa);
         }
         return new ResponseEntity<>(companyService.save(companyOptional.get()), HttpStatus.OK);
     }
@@ -89,9 +88,9 @@ public class CompanyController {
         if (!company.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         } else {
-            if (company.get().getProposed().equals(Constant.Proposal.NO)) {
-                company.get().setProposed(Constant.Proposal.YES);
-            } else company.get().setProposed(Constant.Proposal.NO);
+            if (company.get().getProposed().equals(Constant.Proposal.Không)) {
+                company.get().setProposed(Constant.Proposal.Có);
+            } else company.get().setProposed(Constant.Proposal.Không);
         }
         return new ResponseEntity<>(companyService.save(company.get()), HttpStatus.OK);
     }
@@ -115,8 +114,8 @@ public class CompanyController {
 
     //danh sach cong ty khong khoa
     @GetMapping("/unlock-company")
-    public ResponseEntity<Page<Company>> findAllUnlockCompanies(Pageable pageable) {
-        return new ResponseEntity<>(companyService.findAllUnlockCompanies(pageable), HttpStatus.OK);
+    public ResponseEntity<Iterable<Company>> findAllUnlockCompanies() {
+        return new ResponseEntity<>(companyService.findAllUnlockCompanies(), HttpStatus.OK);
     }
 
     //danh sach cong ty bi khoa
