@@ -26,22 +26,22 @@ public class JwtResponse {
     }
 
 
-
-    public JwtResponse(String token, Long id, String name, String username, String email, String avatar, Collection<? extends GrantedAuthority> authorities) {
-        this.token = token;
-        this.id = id;
-        this.name = name;
-        this.email = email;
-        this.avatar = avatar;
-        this.roles = authorities;
-    }
     public JwtResponse(String token, Long id, String name, String username, String email, Collection<? extends GrantedAuthority> authorities) {
         this.token = token;
         this.id = id;
         this.name = name;
         this.username = username;
         this.email = email;
+        this.roles = authorities;
+    }
 
+    public JwtResponse(String token, Long id, String name, String username, String email, String avatar, Collection<? extends GrantedAuthority> authorities) {
+        this.token = token;
+        this.id = id;
+        this.name = name;
+        this.username = username;
+        this.email = email;
+        this.avatar = avatar;
         this.roles = authorities;
     }
 

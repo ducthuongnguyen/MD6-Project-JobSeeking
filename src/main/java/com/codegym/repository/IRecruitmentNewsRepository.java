@@ -7,6 +7,8 @@ import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
 
+import java.util.List;
+
 @Repository
 public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNews, Long> {
     @Query(value = "select * from recruitment_news where proposed = 0;", nativeQuery = true)
@@ -23,5 +25,5 @@ public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNew
 
     Iterable<RecruitmentNews> findAllByCompany(Company company);
 //    Page<RecruitmentNews> findAll(Pageable pageable);
-
+    Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlaceContaining(String title,String workingplace);
 }

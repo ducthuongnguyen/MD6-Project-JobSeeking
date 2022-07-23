@@ -11,6 +11,7 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.List;
 import java.util.Optional;
 
 import static com.codegym.constant.Constant.Status.Khóa;
@@ -113,5 +114,14 @@ public class RecruitmentNewsController {
     @GetMapping("/unlocked-list")
     public ResponseEntity<Iterable<RecruitmentNews>> findAllUnlockRecruitmentNews() {
         return new ResponseEntity<>(recruitmentNewsService.findAllUnlockRecruitmentNews(), HttpStatus.OK);
+    }
+
+    //tim kiem nhanh theo ten linh vuc noi lam viec luong nho nhat
+    @GetMapping("/q-search")
+    public ResponseEntity<Iterable<RecruitmentNews>> searchAllRecruitmentNews(@RequestParam("title") String title,@RequestParam("workingplace") String place) {
+       if (title.equals("")){
+           title=place;
+       }
+        return new ResponseEntity<>(recruitmentNewsService.findAllByTitleContainingAndWorkingPlaceContaining(title, place), HttpStatus.OK);
     }
 }
