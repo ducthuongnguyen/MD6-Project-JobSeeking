@@ -14,21 +14,21 @@ public class FieldService implements IFieldService {
 
     @Override
     public Iterable<Field> findAll() {
-        return null;
+        return fieldRepository.findAll();
     }
 
     @Override
     public Optional<Field> findById(Long id) {
-        return Optional.empty();
+        return fieldRepository.findById(id);
     }
 
     @Override
     public Field save(Field field) {
-        return null;
+        return fieldRepository.save(field);
     }
 
     @Override
     public void remove(Long id) {
-
+        fieldRepository.deleteById(id);
     }
 }

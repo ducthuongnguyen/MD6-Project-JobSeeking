@@ -18,13 +18,14 @@ public class RecruitmentNews {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
-    @NotBlank
     private String title;
+
     @ManyToOne
     private Company company;
     @ManyToOne
     private Vacancy vacancy;
     @ManyToOne
+
     private Field field;
     private Integer salaryFrom;
     private Integer salaryTo;

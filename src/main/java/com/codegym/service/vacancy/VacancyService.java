@@ -14,21 +14,21 @@ public class VacancyService implements IVacancyService {
 
     @Override
     public Iterable<Vacancy> findAll() {
-        return null;
+        return vacancyRepository.findAll();
     }
 
     @Override
     public Optional<Vacancy> findById(Long id) {
-        return Optional.empty();
+        return vacancyRepository.findById(id);
     }
 
     @Override
     public Vacancy save(Vacancy vacancy) {
-        return null;
+        return vacancyRepository.save(vacancy);
     }
 
     @Override
     public void remove(Long id) {
-
+        vacancyRepository.deleteById(id);
     }
 }
