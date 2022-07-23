@@ -12,7 +12,6 @@ import java.util.List;
 @Repository
 public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNews, Long> {
     @Query(value = "select * from recruitment_news where proposed = 0;", nativeQuery = true)
-
     Iterable<RecruitmentNews> findAllProposedRecruitmentNews();
 
     //danh sach tin tuyen dung bi khoa
@@ -24,6 +23,8 @@ public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNew
     Iterable<RecruitmentNews> findAllUnlockRecruitmentNews();
 
     Iterable<RecruitmentNews> findAllByCompany(Company company);
-//    Page<RecruitmentNews> findAll(Pageable pageable);
-    Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlaceContaining(String title,String workingplace);
+
+    //    Page<RecruitmentNews> findAll(Pageable pageable);
+//    Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlaceContaining(String title,String workingplace);
+    Iterable<RecruitmentNews> findAllByTitleContaining(String title);
 }
