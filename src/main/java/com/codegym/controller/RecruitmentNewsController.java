@@ -40,6 +40,7 @@ public class RecruitmentNewsController {
         return new ResponseEntity<>(recruitmentNewsService.save(recruitmentNewsOptional.get()), HttpStatus.OK);
     }
 
+    //set tin tuyen dung la de xuat
     @PutMapping("/set-propose/{id}")
     public ResponseEntity<RecruitmentNews> setProposal(@PathVariable Long id) {
         Optional<RecruitmentNews> recruitmentNews = recruitmentNewsService.findById(id);
