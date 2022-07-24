@@ -89,8 +89,8 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-//        Company company = companyService.findByEmail(userPrinciple.getEmail()).get();
-        return ResponseEntity.ok(new JwtResponse(token, userPrinciple.getId(), userPrinciple.getName(), userPrinciple.getUsername(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+        Company company = companyService.findByEmail(userPrinciple.getEmail()).get();
+        return ResponseEntity.ok(new JwtResponse(token, company.getId(), userPrinciple.getName(), userPrinciple.getUsername(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
     }
 
     @PostMapping(value = "/sign-up-company", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
