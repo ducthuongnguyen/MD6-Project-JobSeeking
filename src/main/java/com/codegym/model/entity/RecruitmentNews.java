@@ -1,6 +1,7 @@
 package com.codegym.model.entity;
 
 import com.codegym.constant.Constant;
+import com.fasterxml.jackson.annotation.JsonFormat;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
@@ -30,6 +31,7 @@ public class RecruitmentNews {
     private Field field;
     private Integer salaryFrom;
     private Integer salaryTo;
+    @JsonFormat(pattern = "dd-MM-yyyy")
     private LocalDate expiredDate;
     private Integer employeeQuantity;
     private Double requiredExperience;
