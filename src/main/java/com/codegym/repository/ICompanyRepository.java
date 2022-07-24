@@ -1,16 +1,13 @@
 package com.codegym.repository;
 
 import com.codegym.model.entity.Company;
-
-import java.util.Optional;
-
-import com.codegym.model.entity.RecruitmentNews;
-import com.codegym.model.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.stereotype.Repository;
+
+import java.util.Optional;
 
 @Repository
 public interface ICompanyRepository extends JpaRepository<Company, Long> {
@@ -45,6 +42,6 @@ public interface ICompanyRepository extends JpaRepository<Company, Long> {
     //kt xem user da co tong DB chua khi tao du lieu
     Boolean existsByName(String name);
 
-    //kt xem email da co torng DB chua khi tao du lieu
+    //kt xem email da co trong DB chua khi tao du lieu
     Boolean existsByEmail(String email);
 }
