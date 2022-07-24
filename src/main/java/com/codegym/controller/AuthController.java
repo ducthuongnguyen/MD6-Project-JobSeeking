@@ -58,14 +58,10 @@ public class AuthController {
 
     @PostMapping("/sign-up")
     public ResponseEntity<?> register(@Valid @RequestBody SignUpCompanyForm command) {
-//        if (userService.existsByUsername(signUpForm.getUsername())) {
-//            return new ResponseEntity<>(new ResponMessage("no_user"), HttpStatus.OK);
-//        }
         if (userService.existsByEmail(command.getEmail())) {
-            return new ResponseEntity<>(new ResponMessage("no_email"), HttpStatus.OK);
+            throw new CommonException(Response.EMAIL_IS_EXISTS, Response.EMAIL_IS_EXISTS.getResponseMessage());
         }
         User user = new User(command.getName(), command.getEmail(), command.getEmail(), command.getPhoneNumber(), passwordEncoder.encode(command.getPassword()));
-//        Set<String> strRoles = signUpForm.getRoles();
         Set<Role> roles = new HashSet<>();
         Role adminRole = roleService.findByName(Constant.RoleName.USER).orElseThrow(
                 () -> new RuntimeException("Role not found")
@@ -113,6 +109,7 @@ public class AuthController {
             return new ResponseEntity<>(new MyResponseBody(Response.SYSTEM_ERROR, e.getMessage()), HttpStatus.OK);
         }
     }
+
     @GetMapping("/search")
     public ResponseEntity<Optional<Company>> findByEmail(@RequestParam String email) {
         return new ResponseEntity<>(companyService.findByEmail(email), HttpStatus.OK);
