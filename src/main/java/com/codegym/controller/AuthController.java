@@ -10,6 +10,7 @@ import com.codegym.model.dto.request.SignUpCompanyForm;
 import com.codegym.model.dto.request.SignUpForm;
 import com.codegym.model.dto.response.*;
 import com.codegym.model.entity.Company;
+import com.codegym.model.entity.RecruitmentNews;
 import com.codegym.model.entity.Role;
 import com.codegym.model.entity.User;
 import com.codegym.security.jwt.JwtProvider;
@@ -92,7 +93,6 @@ public class AuthController {
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-
         JwtResponse jwtResponse;
         if (company.isPresent()){
            jwtResponse = new JwtResponse(token, company.get().getId(), userPrinciple.getName(), userPrinciple.getUsername(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities());
@@ -123,8 +123,5 @@ public class AuthController {
     public ResponseEntity<Optional<Company>> findByEmail(@RequestParam String email) {
         return new ResponseEntity<>(companyService.findByEmail(email), HttpStatus.OK);
     }
-//    @PostMapping("/sign-in-company/${id}")
-//    public ResponseEntity<?> applyRecruitment(@PathVariable Long id, @RequestBody User user){
-//
-//    }
+
 }
