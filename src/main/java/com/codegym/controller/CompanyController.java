@@ -65,7 +65,7 @@ public class CompanyController {
         }
         User user = new User(companyOptional.get().getName(), companyOptional.get().getEmail(), companyOptional.get().getEmail(), companyOptional.get().getPhoneNumber(), passwordEncoder.encode(companyOptional.get().getPassword()));
         companyOptional.get().setApproval(Constant.Approval.YES);
-        companyOptional.get().setStatus(Khóa);
+        companyOptional.get().setStatus(Mở);
         Company companySave = companyOptional.get();
         companyService.save(companySave);
         Set<Role> rolesCompany = companySave.getRoles();
