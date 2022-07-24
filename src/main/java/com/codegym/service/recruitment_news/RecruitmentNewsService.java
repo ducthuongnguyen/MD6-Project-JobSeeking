@@ -53,14 +53,41 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
     public Iterable<RecruitmentNews> findAllByCompany(Company company) {
         return recruitmentNewsRepository.findAllByCompany(company);
     }
-
-    public Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlaceContaining(String title, String workingplace) {
-        return recruitmentNewsRepository.findAllByTitleContainingAndWorkingPlaceContaining(title, workingplace);
+    @Override
+    public Iterable<RecruitmentNews> findAllRecruitmentNews(String title) {
+        String tagSearch = "%" + title + "%";
+        return recruitmentNewsRepository.findAllRecruitmentNews(tagSearch);
     }
 
-    //    @Override
-//    public Page<RecruitmentNews> findAll(Pageable pageable) {
-//        return recruitmentNewsRepository.findAll(pageable);
-//    }
+    @Override
+    public Iterable<RecruitmentNews> findAllByWorkingPlace(String title) {
+        String tagSearch = "%" + title + "%";
+        return recruitmentNewsRepository.findAllByWorkingPlace(tagSearch);
+    }
+
+    @Override
+    public Iterable<RecruitmentNews> findRecruimentByFieldName(String title) {
+        String tagSearch = "%" + title + "%";
+        return recruitmentNewsRepository.findRecruimentByFieldName(tagSearch);
+    }
+
+    @Override
+    public Iterable<RecruitmentNews> findRecruimentByTitleAndCompanyName(String title) {
+        String tagSearch = "%" + title + "%";
+        return recruitmentNewsRepository.findRecruimentByTitleAndCompanyName(tagSearch);
+    }
+
+    @Override
+    public Iterable<RecruitmentNews> findRecruimentByFieldAndWorkingPlace(String title) {
+        String tagSearch = "%" + title + "%";
+        return recruitmentNewsRepository.findRecruimentByFieldAndWorkingPlace(tagSearch);
+    }
+
+    @Override
+    public Iterable<RecruitmentNews> findRecruitmentNewsByTitleWorkingPlaceExperience(String title) {
+        String tagSearch = "%" + title + "%";
+        return recruitmentNewsRepository.findRecruitmentNewsByTitleWorkingPlaceExperience(tagSearch);
+    }
+
 
 }

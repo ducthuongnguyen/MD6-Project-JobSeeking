@@ -116,12 +116,42 @@ public class RecruitmentNewsController {
         return new ResponseEntity<>(recruitmentNewsService.findAllUnlockRecruitmentNews(), HttpStatus.OK);
     }
 
-    //tim kiem nhanh theo ten linh vuc noi lam viec luong nho nhat
-    @GetMapping("/q-search")
-    public ResponseEntity<Iterable<RecruitmentNews>> searchAllRecruitmentNews(@RequestParam("title") String title,@RequestParam("workingplace") String place) {
-       if (title.equals("")){
-           title=place;
-       }
-        return new ResponseEntity<>(recruitmentNewsService.findAllByTitleContainingAndWorkingPlaceContaining(title, place), HttpStatus.OK);
+    //tim kiem nhanh theo tieu de,linh vuc, noi lam viec, luong nho nhat
+    @GetMapping("/search")
+    public ResponseEntity<Iterable<RecruitmentNews>> searchAllRecruitmentNews(@RequestParam("title") String title) {
+        Iterable<RecruitmentNews> recruitmentNews=recruitmentNewsService.findAllRecruitmentNews(title);
+        return new ResponseEntity<>(recruitmentNews, HttpStatus.OK);
+    }
+    //tim kiem nhanh theo ten noi lam viec
+    @GetMapping("/search-by-working-place")
+    public ResponseEntity<Iterable<RecruitmentNews>> searchByWorkingPlace(@RequestParam("title") String title) {
+        Iterable<RecruitmentNews> recruitmentNews=recruitmentNewsService.findAllByWorkingPlace(title);
+        return new ResponseEntity<>(recruitmentNews, HttpStatus.OK);
+    }
+    //tim kiem nhanh theo ten chuyen nganh
+    @GetMapping("/search-by-field-name")
+    public ResponseEntity<Iterable<RecruitmentNews>> searchByFieldName(@RequestParam("title") String title) {
+        Iterable<RecruitmentNews> recruitmentNews=recruitmentNewsService.findRecruimentByFieldName(title);
+        return new ResponseEntity<>(recruitmentNews, HttpStatus.OK);
+    }
+    //tim kiem nhanh theo tieu de,ten cong ty
+    @GetMapping("/search-by-title-companyname")
+    public ResponseEntity<Iterable<RecruitmentNews>> findRecruimentByTitleAndCompanyName(@RequestParam("title") String title) {
+        Iterable<RecruitmentNews> recruitmentNews=recruitmentNewsService.findRecruimentByTitleAndCompanyName(title);
+        return new ResponseEntity<>(recruitmentNews, HttpStatus.OK);
+    }
+
+    //tim kiem nhanh theo ten nganh nghe, noi lam viec
+    @GetMapping("/search-by-field-working-place")
+    public ResponseEntity<Iterable<RecruitmentNews>> findRecruimentByFieldAndWorkingPlace(@RequestParam("title") String title) {
+        Iterable<RecruitmentNews> recruitmentNews=recruitmentNewsService.findRecruimentByFieldAndWorkingPlace(title);
+        return new ResponseEntity<>(recruitmentNews, HttpStatus.OK);
+    }
+
+    //tim theo ten tieu de ,kinh nghiem,thanh pho
+    @GetMapping("/search-by-title-working-place-experience")
+    public ResponseEntity<Iterable<RecruitmentNews>> findRecruitmentNewsByTitleWorkingPlaceExperience(@RequestParam("title") String title) {
+        Iterable<RecruitmentNews> recruitmentNews=recruitmentNewsService.findRecruitmentNewsByTitleWorkingPlaceExperience(title);
+        return new ResponseEntity<>(recruitmentNews, HttpStatus.OK);
     }
 }
