@@ -33,6 +33,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.validation.ConstraintViolation;
 import javax.validation.ConstraintViolationException;
 import javax.validation.Valid;
+import java.nio.charset.StandardCharsets;
 import java.util.HashSet;
 import java.util.Optional;
 import java.util.Set;
@@ -84,13 +85,21 @@ public class AuthController {
 
     @PostMapping("/sign-in-company")
     public ResponseEntity<?> login1(@Valid @RequestBody SignUpCompanyForm signUpCompanyForm) {
+        Optional<Company> company = companyService.findByEmail(signUpCompanyForm.getEmail());
+
         Authentication authentication = authenticationManager.authenticate(
                 new UsernamePasswordAuthenticationToken(signUpCompanyForm.getEmail(), signUpCompanyForm.getPassword()));
         SecurityContextHolder.getContext().setAuthentication(authentication);
         String token = jwtProvider.createToken(authentication);
         UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-        Company company = companyService.findByEmail(userPrinciple.getEmail()).get();
-        return ResponseEntity.ok(new JwtResponse(token, company.getId(), userPrinciple.getName(), userPrinciple.getUsername(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
+
+        JwtResponse jwtResponse;
+        if (company.isPresent()){
+           jwtResponse = new JwtResponse(token, company.get().getId(), userPrinciple.getName(), userPrinciple.getUsername(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities());
+        } else {
+            jwtResponse = new JwtResponse(token, userPrinciple.getId(), userPrinciple.getName(), userPrinciple.getUsername(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities());
+        }
+        return ResponseEntity.ok(jwtResponse);
     }
 
     @PostMapping(value = "/sign-up-company", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
@@ -114,4 +123,8 @@ public class AuthController {
     public ResponseEntity<Optional<Company>> findByEmail(@RequestParam String email) {
         return new ResponseEntity<>(companyService.findByEmail(email), HttpStatus.OK);
     }
+//    @PostMapping("/sign-in-company/${id}")
+//    public ResponseEntity<?> applyRecruitment(@PathVariable Long id, @RequestBody User user){
+//
+//    }
 }

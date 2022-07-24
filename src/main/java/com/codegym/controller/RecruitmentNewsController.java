@@ -168,4 +168,5 @@ public class RecruitmentNewsController {
         Iterable<RecruitmentNews> recruitmentNews=recruitmentNewsService.findRecruitmentNewsByTitleWorkingPlaceExperience(title);
         return new ResponseEntity<>(recruitmentNews, HttpStatus.OK);
     }
+
 }
