@@ -6,7 +6,6 @@ import com.codegym.repository.IRecruitmentNewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
-import java.util.List;
 import java.util.Optional;
 
 @Service
@@ -36,17 +35,17 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
 
     @Override
     public Iterable<RecruitmentNews> findAllProposedRecruitmentNews() {
-        return recruitmentNewsRepository.findAllProposedRecruitmentNews();
+        return recruitmentNewsRepository.findProposedRecruitmentNews();
     }
 
     @Override
     public Iterable<RecruitmentNews> findAllLockedRecruitmentNews() {
-        return recruitmentNewsRepository.findAllLockedRecruitmentNews();
+        return recruitmentNewsRepository.findLockedRecruitmentNews();
     }
 
     @Override
     public Iterable<RecruitmentNews> findAllUnlockRecruitmentNews() {
-        return recruitmentNewsRepository.findAllUnlockRecruitmentNews();
+        return recruitmentNewsRepository.findUnlockRecruitmentNews();
     }
 
     @Override
