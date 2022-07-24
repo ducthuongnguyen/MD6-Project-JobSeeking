@@ -14,7 +14,6 @@ public interface IRecruitmentNewsService extends IGeneralService<RecruitmentNews
     Iterable<RecruitmentNews> findAllProposedRecruitmentNews();
 
     Iterable<RecruitmentNews> findAllByCompany(Company company);
-//    Page<RecruitmentNews> findAll(Pageable pageable);
 
     //danh sach tin tuyen dung bi khoa
     Iterable<RecruitmentNews> findAllLockedRecruitmentNews();
@@ -22,17 +21,22 @@ public interface IRecruitmentNewsService extends IGeneralService<RecruitmentNews
     // danh sach tuyen dung khong khoa
     Iterable<RecruitmentNews> findAllUnlockRecruitmentNews();
 
-//tim kiem nhanh theo ten linh vuc noi lam viec luong nho nhat
-//Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlaceContaining(String title,String workingplace);
-
-    Iterable<RecruitmentNews> findAllByTitleContaining(String title);
-
-
-
     //tim kiem nhanh theo ten linh vuc noi lam viec luong nho nhat
-//Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlaceContaining(String title,String workingplace);
-//    Iterable<RecruitmentNews> findAllByTitleContaining(String title);
-    Iterable<RecruitmentNews> findAllRecruitmentNews(@Param("title") String title);
+    Iterable<RecruitmentNews> findAllRecruitmentNews(String title);
 
+    //tim kiem nhanh noi lam viec
+    Iterable<RecruitmentNews> findAllByWorkingPlace(String title);
+
+    //tim kiem nhanh theo ten chuyen nganh
+    Iterable<RecruitmentNews> findRecruimentByFieldName(String title);
+
+    //tim kiem nhanh theo tieu de,ten cong ty
+    Iterable<RecruitmentNews> findRecruimentByTitleAndCompanyName(String title);
+
+    //tim kiem nhanh theo ten nganh nghe, noi lam viec
+    Iterable<RecruitmentNews> findRecruimentByFieldAndWorkingPlace(String title);
+
+    //tim theo ten tieu de ,kinh nghiem,thanh pho
+    Iterable<RecruitmentNews> findRecruitmentNewsByTitleWorkingPlaceExperience(String title);
 
 }
