@@ -8,7 +8,7 @@ spring:
     password: 123456
   jpa:
     hibernate:
-      ddl-auto: update
+      ddl-auto: none
     generate-ddl: true
     open-in-view: false
     show-sql: true
@@ -24,9 +24,9 @@ spring:
           auto: update
   servlet:
     multipart:
-      enabled: true
-      file-size-threshold: 2MB
-      max-file-size: 500MB
-      max-request-size: 500MB
+#      enabled: true
+#      file-size-threshold: 2MB
+      max-file-size: 10MB
+      max-request-size: 10MB
   main:
     allow-circular-references: true

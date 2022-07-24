@@ -38,8 +38,8 @@ public class CompanyController {
         return new ResponseEntity<>(company.get(), HttpStatus.OK);
     }
 
-    @PutMapping(value = "/{id}",  consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Company> update(@PathVariable Long id, @RequestPart(value = "company") Company company,@RequestPart(value = "image", required = false) MultipartFile file) {
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestPart(value = "company") Company company, @RequestPart(value = "image", required = false) MultipartFile file) {
         Optional<Company> companyOptional = companyService.findById(id);
         if (!companyOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
@@ -62,8 +62,8 @@ public class CompanyController {
         company.setProposed(companyOptional.get().getProposed());
         company.setRoles(companyOptional.get().getRoles());
         company.setApproval(companyOptional.get().getApproval());
-        companyService.save(company);
-        return new ResponseEntity<>(HttpStatus.OK);
+        Company newCompany = companyService.save(company);
+        return new ResponseEntity<>(newCompany, HttpStatus.OK);
 //        tạm thời là xong. Nhưng mà còn 1 số logic khác ở udpdate
 //        chị test trên FE hộ e với ạ, e vừa edit đc rồi xong lúc sau lại k đc , e k hiểu tại sao ạ
 //    mở đi
