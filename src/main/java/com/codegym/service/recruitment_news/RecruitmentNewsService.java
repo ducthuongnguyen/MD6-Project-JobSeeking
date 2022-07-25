@@ -56,8 +56,13 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
     }
 
     @Override
+    public Iterable<RecruitmentNews> findAllByFieldContaining(String field) {
+        return recruitmentNewsRepository.findAllByFieldContaining(field);
+    }
+
+    @Override
     public Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlace(String title, String place) {
-        return recruitmentNewsRepository.findAllByTitleContainingAndWorkingPlace(title,place);
+        return recruitmentNewsRepository.findAllByTitleContainingAndWorkingPlace(title, place);
     }
 
     @Override
@@ -66,8 +71,8 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
     }
 
     @Override
-    public Iterable<RecruitmentNews> findAllByTitleSalaryExperiencePlace(String title, Integer salary_from, Integer salary_to, Integer required_experience, String working_place) {
-        return recruitmentNewsRepository.findAllByTitleSalaryExperiencePlace(title, salary_from, salary_to, required_experience, working_place);
+    public Iterable<RecruitmentNews> findAllByTitleSalaryExperiencePlaceField(String title, Integer salary_from, Integer salary_to, Integer required_experience, String working_place, String field) {
+        return recruitmentNewsRepository.findAllByTitleSalaryExperiencePlaceField(title, salary_from, salary_to, required_experience, working_place, field);
     }
 
     @Override

@@ -23,6 +23,9 @@ public interface IRecruitmentNewsService extends IGeneralService<RecruitmentNews
 
     Page<RecruitmentNews> findPageUnlockRecruitmentNews(Pageable pageable);
 
+    //tim kiem theo chuyen nganh (field)
+    Iterable<RecruitmentNews> findAllByFieldContaining(String field);
+
     //tim theo title, dia diem
     Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlace(String title, String place);
 
@@ -30,5 +33,5 @@ public interface IRecruitmentNewsService extends IGeneralService<RecruitmentNews
     Iterable<RecruitmentNews> findAllByTitleContaining(String title);
 
     //tìm theo job title, salary range, kinh nghiệm, thành phố
-    Iterable<RecruitmentNews> findAllByTitleSalaryExperiencePlace(String title, Integer salary_from, Integer salary_to, Integer required_experience, String working_place);
+    Iterable<RecruitmentNews> findAllByTitleSalaryExperiencePlaceField(String title, Integer salary_from, Integer salary_to, Integer required_experience, String working_place, String field);
 }

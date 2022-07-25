@@ -31,25 +31,31 @@ public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNew
     @Query(value = "select * from recruitment_news where status = 1", nativeQuery = true)
     Iterable<RecruitmentNews> findUnlockRecruitmentNews();
 
+    //tim kiem theo title
+    @Query(value = "select * from recruitment_news where status = 1 and title like :title", nativeQuery = true)
+    Iterable<RecruitmentNews> findAllByTitleContaining(@Param("title") String title);
+
+    //tim kiem theo chuyen nganh (field)
+    @Query(value = "select * from recruitment_news where status = 1 and field like :field", nativeQuery = true)
+    Iterable<RecruitmentNews> findAllByFieldContaining(@Param("field") String field);
+
     //tim theo title, dia diem
     @Query(value = "select * from recruitment_news where status = 1 and " + "(:title is null or title like :title)" +
             " and " + "(:place is null or working_place like :place)", nativeQuery = true)
     Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlace(@Param("title") String title, @Param("place") String place);
 
-    //tim kiem theo title
-    @Query(value = "select * from recruitment_news where status = 1 and title like :title", nativeQuery = true)
-    Iterable<RecruitmentNews> findAllByTitleContaining(String title);
-
-    //tìm theo job title, salary range, kinh nghiệm, thành phố
+    //tìm theo job title, salary range, kinh nghiệm, thanh pho, chuyen nganh (field)
     @Query(value = "select * from recruitment_news where status = 1 and"
             + " (:title is null or title like :title)" + " and"
             + " (:from is null or salary_from >= :from)" + " and"
             + " (:to is null or salary_to <= :to)" + " and"
             + " (:experience is null or required_experience = :experience)" + " and"
-            + " (:place is null or working_place like :place)", nativeQuery = true)
-    Iterable<RecruitmentNews> findAllByTitleSalaryExperiencePlace(@Param("title") String title,
+            + " (:place is null or working_place like :place)"+ "and"
+            + " (:field is null or working_place like :field)", nativeQuery = true)
+    Iterable<RecruitmentNews> findAllByTitleSalaryExperiencePlaceField(@Param("title") String title,
                                                                   @Param("from") Integer from,
                                                                   @Param("to") Integer to,
                                                                   @Param("experience") Integer required_experience,
-                                                                  @Param("place") String working_place);
+                                                                  @Param("place") String working_place,
+                                                                  @Param("field") String field);
 }
