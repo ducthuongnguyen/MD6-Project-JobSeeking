@@ -10,6 +10,7 @@ import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
+import java.util.Date;
 
 @Entity
 @Data
@@ -32,7 +33,7 @@ public class RecruitmentNews {
     private Integer salaryFrom;
     private Integer salaryTo;
     @JsonFormat(pattern = "dd-MM-yyyy")
-    private LocalDate expiredDate;
+    private Date expiredDate;
     private Integer employeeQuantity;
     private Double requiredExperience;
     private Constant.Gender gender;
