@@ -151,11 +151,14 @@ public class RecruitmentNewsController {
     //tim theo title, dia diem
     @GetMapping("/find-by-title-place")
     public ResponseEntity<Iterable<RecruitmentNews>> findAllByTitleContainingAndWorkingPlace(@RequestParam String title, @RequestParam String place) {
-        Iterable<RecruitmentNews> recruitmentNewsIterable;
-        if (place.equals("")) {
-            return new ResponseEntity(findAllByTitleContaining('%' + title + '%'), HttpStatus.OK);
-        }
-        recruitmentNewsIterable = recruitmentNewsService.findAllByTitleContainingAndWorkingPlace('%' + title + '%', place);
+        Iterable<RecruitmentNews> recruitmentNewsIterable = recruitmentNewsService.findAllByTitleContainingAndWorkingPlace('%' + title + '%', '%' + place + '%');
+        return new ResponseEntity<>(recruitmentNewsIterable, HttpStatus.OK);
+    }
+
+    //tìm theo job title, salary range, kinh nghiệm, thành phố
+    @GetMapping("/find-4-criteria")
+    public ResponseEntity<Iterable<RecruitmentNews>> findAllByTitleSalaryExperiencePlace(@RequestParam String title, @RequestParam Integer from, @RequestParam Integer to, @RequestParam Integer experience, @RequestParam String place) {
+        Iterable<RecruitmentNews> recruitmentNewsIterable = recruitmentNewsService.findAllByTitleSalaryExperiencePlace('%' + title + '%', from, to, experience, '%' + place + '%');
         return new ResponseEntity<>(recruitmentNewsIterable, HttpStatus.OK);
     }
 
