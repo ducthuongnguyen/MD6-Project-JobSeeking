@@ -45,15 +45,17 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
         return recruitmentNewsRepository.findLockedRecruitmentNews();
     }
 
+
+
     @Override
-    public Page<RecruitmentNews> findUnlockRecruitmentNews(Pageable pageable) {
-        return recruitmentNewsRepository.findUnlockRecruitmentNews(pageable);
+    public Iterable<RecruitmentNews> findAllUnlockRecruitmentNews() {
+        return recruitmentNewsRepository.findUnlockRecruitmentNews();
     }
 
-//    @Override
-//    public Iterable<RecruitmentNews> findAllUnlockRecruitmentNews() {
-//        return recruitmentNewsRepository.findUnlockRecruitmentNews();
-//    }
+    @Override
+    public Page<RecruitmentNews> findPageUnlockRecruitmentNews(Pageable pageable) {
+        return recruitmentNewsRepository.findPageUnlockRecruitmentNews(pageable);
+    }
 
 
     @Override

@@ -127,13 +127,13 @@ public class RecruitmentNewsController {
     }
 
     //danh sach tin tuyen dung khong khoa
-//    @GetMapping("/unlocked-list")
-//    public ResponseEntity<Iterable<RecruitmentNews>> findAllUnlockRecruitmentNews() {
-//        return new ResponseEntity<>(recruitmentNewsService.findAllUnlockRecruitmentNews(), HttpStatus.OK);
-//    }
     @GetMapping("/unlocked-list")
+    public ResponseEntity<Iterable<RecruitmentNews>> findAllUnlockRecruitmentNews() {
+        return new ResponseEntity<>(recruitmentNewsService.findAllUnlockRecruitmentNews(), HttpStatus.OK);
+    }
+    @GetMapping("/unlocked-list-page")
     public ResponseEntity<Page<RecruitmentNews>> findAllUnlockRecruitmentNews(Pageable pageable) {
-        return new ResponseEntity<>(recruitmentNewsService.findUnlockRecruitmentNews(pageable), HttpStatus.OK);
+        return new ResponseEntity<>(recruitmentNewsService.findPageUnlockRecruitmentNews(pageable), HttpStatus.OK);
     }
 
     //tim kiem nhanh theo tieu de,linh vuc, noi lam viec, luong nho nhat
