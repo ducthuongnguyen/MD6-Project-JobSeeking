@@ -96,7 +96,7 @@ public class RecruitmentNewsController {
         if (recruitmentNews.getField().getId() == null) {
             return new ResponseEntity<>(new ResponMessage("Hãy điền tên lĩnh vực đang làm!!"), HttpStatus.OK);
         }
-        if (recruitmentNews.getWorkingPlace() == "") {
+        if (recruitmentNews.getWorkingPlace() == null) {
             return new ResponseEntity<>(new ResponMessage("Hãy điền nơi làm việc!!"), HttpStatus.OK);
         }
         if (recruitmentNews.getSalaryFrom() == null) {
