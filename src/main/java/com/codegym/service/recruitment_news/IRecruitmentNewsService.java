@@ -19,7 +19,8 @@ public interface IRecruitmentNewsService extends IGeneralService<RecruitmentNews
     Iterable<RecruitmentNews> findAllLockedRecruitmentNews();
 
     // danh sach tuyen dung khong khoa
-    Iterable<RecruitmentNews> findAllUnlockRecruitmentNews();
+//    Iterable<RecruitmentNews> findAllUnlockRecruitmentNews();
+    Page<RecruitmentNews> findUnlockRecruitmentNews(Pageable pageable);
 
     //tim kiem nhanh theo ten linh vuc noi lam viec luong nho nhat
     Iterable<RecruitmentNews> findAllRecruitmentNews(String title);
