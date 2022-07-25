@@ -31,6 +31,10 @@ public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNew
     @Query(value = "select * from recruitment_news where status = 1", nativeQuery = true)
     Iterable<RecruitmentNews> findUnlockRecruitmentNews();
 
+//    // danh sach tuyen dung khong khoa phan trang
+//    @Query(value = "select * from recruitment_news where status = 1", nativeQuery = true)
+//    Page<RecruitmentNews> findPageUnlockRecruitmentNews(Pageable pageable);
+
     //tim theo title, dia diem
     @Query(value = "select * from recruitment_news where status = 1 and title like :title and working_place = :place", nativeQuery = true)
     Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlace(@Param("title") String title, @Param("place") String place);
