@@ -7,6 +7,7 @@ import com.codegym.model.dto.DataMailDTO;
 import com.codegym.model.dto.request.SignUpCompanyForm;
 import com.codegym.model.dto.response.Response;
 import com.codegym.model.entity.Company;
+import com.codegym.model.entity.Message;
 import com.codegym.model.entity.Role;
 import com.codegym.model.entity.User;
 import com.codegym.repository.ICompanyRepository;
@@ -187,4 +188,6 @@ public class CompanyService implements ICompanyService {
     public Iterable<Company> findAllLockCompanies() {
         return companyRepository.findAllLockCompanies();
     }
+
+
 }

@@ -171,14 +171,6 @@ public class RecruitmentNewsController {
         Iterable<RecruitmentNews> recruitmentNews=recruitmentNewsService.findRecruitmentNewsByTitleWorkingPlaceExperience(title);
         return new ResponseEntity<>(recruitmentNews, HttpStatus.OK);
     }
-//    @PutMapping("/apply/${id}")
-//    public ResponseEntity<RecruitmentNews> applyRecruitment(@PathVariable Long id, @RequestBody User user){
-//        Optional<RecruitmentNews> recruitmentNews = recruitmentNewsService.findById(id);
-//        Set<User> user1 = new HashSet<>();
-//        user1.add(user);
-//        recruitmentNews.get().setUsers(user1);
-//        return new ResponseEntity<>(recruitmentNews, HttpStatus.OK);
-//    }
     @PutMapping("/apply/{id}")
     public ResponseEntity<RecruitmentNews> update(@PathVariable Long id, @RequestBody User user) {
         Optional<RecruitmentNews> recruitmentNews = recruitmentNewsService.findById(id);
@@ -188,8 +180,8 @@ public class RecruitmentNewsController {
         Set<User> user1 = recruitmentNews.get().getUsers();
         user1.add(user);
         recruitmentNews.get().setUsers(user1);
-        recruitmentNewsService.save(recruitmentNews.get());
-        return new ResponseEntity<>(HttpStatus.OK);
+
+        return new ResponseEntity<>( recruitmentNewsService.save(recruitmentNews.get()),HttpStatus.OK);
     }
 
 }

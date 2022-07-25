@@ -1,6 +1,7 @@
 package com.codegym.service.company;
 
 import com.codegym.model.entity.Company;
+import com.codegym.model.entity.Message;
 import com.codegym.model.entity.RecruitmentNews;
 import com.codegym.model.entity.User;
 import com.codegym.service.IGeneralService;
@@ -38,4 +39,5 @@ public interface ICompanyService extends IGeneralService<Company> {
 
     //danh sach cong ty bi khoa
     Iterable<Company> findAllLockCompanies();
+
 }
