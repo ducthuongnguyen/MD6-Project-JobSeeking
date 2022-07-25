@@ -130,11 +130,13 @@ public class CompanyController {
     }
 
     //danh sach cong ty khong khoa
-//    @GetMapping("/unlock-company")
-//    public ResponseEntity<Iterable<Company>> findAllUnlockCompanies() {
-//        return new ResponseEntity<>(companyService.findAllUnlockCompanies(), HttpStatus.OK);
-//    }
     @GetMapping("/unlock-company")
+    public ResponseEntity<Iterable<Company>> findAllUnlockCompanies() {
+        return new ResponseEntity<>(companyService.findAllUnlockCompanies(), HttpStatus.OK);
+    }
+
+    //danh sach cong ty khong khoa phan trang
+    @GetMapping("/unlock-company-page")
     public ResponseEntity<Page<Company>> findAllUnlockCompanies(Pageable pageable) {
         return new ResponseEntity<>(companyService.findAllUnlockCompanies(pageable), HttpStatus.OK);
     }

@@ -33,10 +33,12 @@ public interface ICompanyService extends IGeneralService<Company> {
     //danh sach cong ty da duyet
     Iterable<Company> findAllApprovedCompanies();
 
-    //danh sach cong ty khong khoa
-//    Iterable<Company> findAllUnlockCompanies();
+    //danh sach cong ty khong khoa phan trang
     Page<Company> findAllUnlockCompanies(Pageable pageable);
 
     //danh sach cong ty bi khoa
     Iterable<Company> findAllLockCompanies();
+
+    //danh sach cong ty khong khoa
+    Iterable<Company> findAllUnlockCompanies();
 }

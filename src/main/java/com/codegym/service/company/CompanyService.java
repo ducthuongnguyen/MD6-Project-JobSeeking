@@ -183,14 +183,13 @@ public class CompanyService implements ICompanyService {
         return companyRepository.findAllUnlockCompanies(pageable);
     }
 
-
-//    @Override
-//    public Iterable<Company> findAllUnlockCompanies() {
-//        return companyRepository.findAllUnlockCompanies();
-//    }
-
     @Override
     public Iterable<Company> findAllLockCompanies() {
         return companyRepository.findAllLockCompanies();
+    }
+
+    @Override
+    public Iterable<Company> findAllUnlockCompanies() {
+        return companyRepository.findAllUnlockCompanies();
     }
 }
