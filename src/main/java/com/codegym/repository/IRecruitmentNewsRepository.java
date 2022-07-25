@@ -39,4 +39,12 @@ public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNew
     @Query(value = "select * from recruitment_news where status = 1 and title like :title", nativeQuery = true)
     Iterable<RecruitmentNews> findAllByTitleContaining(String title);
 
+    //tìm theo job title, salary range, kinh nghiệm, thành phố
+    @Query(value = "select * from recruitment_news where status=1 and title like :title and salary_from > :from and salary_to< :to "+
+            "and required_experience = :experience and working_place = :place", nativeQuery = true)
+    Iterable<RecruitmentNews> findAllByTitleSalaryExperiencePlace(@Param("title") String title,
+                                                                  @Param("from") int salary_from,
+                                                                  @Param("to") int salary_to,
+                                                                  @Param("experience") int required_experience,
+                                                                  @Param("place") String working_place);
 }

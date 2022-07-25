@@ -66,6 +66,11 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
     }
 
     @Override
+    public Iterable<RecruitmentNews> findAllByTitleSalaryExperiencePlace(String title, int salary_from, int salary_to, int required_experience, String working_place) {
+        return recruitmentNewsRepository.findAllByTitleSalaryExperiencePlace(title, salary_from, salary_to, required_experience, working_place);
+    }
+
+    @Override
     public Iterable<RecruitmentNews> findAllByCompany(Company company) {
         return recruitmentNewsRepository.findAllByCompany(company);
     }
