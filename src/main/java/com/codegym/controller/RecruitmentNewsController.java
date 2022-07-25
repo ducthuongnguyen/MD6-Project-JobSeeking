@@ -185,7 +185,7 @@ public class RecruitmentNewsController {
         if (!recruitmentNews.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
-        Set<User> user1 = new HashSet<>();
+        Set<User> user1 = recruitmentNews.get().getUsers();
         user1.add(user);
         recruitmentNews.get().setUsers(user1);
         recruitmentNewsService.save(recruitmentNews.get());
