@@ -1,6 +1,7 @@
 package com.codegym.repository;
 
 import com.codegym.model.entity.Field;
+import com.codegym.model.entity.RecruitmentNews;
 import com.codegym.model.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
@@ -20,4 +21,5 @@ public interface IUserRepository extends JpaRepository<User, Long> {
     //kt xem email da co torng DB chua khi tao du lieu
     Boolean existsByEmail(String email);
     Page<User> findAllByUsernameContaining(String username, Pageable pageable);
+
 }

@@ -11,6 +11,8 @@ import javax.validation.constraints.NotBlank;
 import javax.validation.constraints.Size;
 import java.time.LocalDate;
 import java.util.Date;
+import java.util.HashSet;
+import java.util.Set;
 
 @Entity
 @Data
@@ -42,4 +44,11 @@ public class RecruitmentNews {
     private Constant.Status status;
     private Constant.Proposal proposed;
     private Constant.WorkingType workingType;
+    @ManyToMany(fetch = FetchType.EAGER)
+    @JoinTable(name = "recruitmentNews_user", joinColumns =
+    @JoinColumn(name = "recruitmentNews_id"), inverseJoinColumns =
+    @JoinColumn(name = "user_id"))
+    Set<User> users = new HashSet<>();
+
+
 }

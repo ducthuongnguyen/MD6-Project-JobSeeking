@@ -98,6 +98,7 @@ public class AuthController {
             jwtResponse = new JwtResponse(token, userPrinciple.getId(), userPrinciple.getName(), userPrinciple.getUsername(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities());
         }
         return ResponseEntity.ok(jwtResponse);
+
     }
 
     @PostMapping(value = "/sign-up-company", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)

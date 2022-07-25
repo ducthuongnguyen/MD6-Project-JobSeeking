@@ -4,6 +4,7 @@ import com.codegym.constant.Constant;
 import com.codegym.model.dto.response.ResponMessage;
 import com.codegym.model.entity.Company;
 import com.codegym.model.entity.RecruitmentNews;
+import com.codegym.model.entity.User;
 import com.codegym.service.company.CompanyService;
 import com.codegym.service.recruitment_news.IRecruitmentNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,7 +15,10 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpServletRequest;
+import java.util.HashSet;
+import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 
 import static com.codegym.constant.Constant.Status.Khóa;
 import static com.codegym.constant.Constant.Status.Mở;
@@ -154,4 +158,18 @@ public class RecruitmentNewsController {
         recruitmentNewsIterable = recruitmentNewsService.findAllByTitleContainingAndWorkingPlace('%' + title + '%', place);
         return new ResponseEntity<>(recruitmentNewsIterable, HttpStatus.OK);
     }
+
+    @PutMapping("/apply/{id}")
+    public ResponseEntity<RecruitmentNews> update(@PathVariable Long id, @RequestBody User user) {
+        Optional<RecruitmentNews> recruitmentNews = recruitmentNewsService.findById(id);
+        if (!recruitmentNews.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Set<User> user1 = recruitmentNews.get().getUsers();
+        user1.add(user);
+        recruitmentNews.get().setUsers(user1);
+        recruitmentNewsService.save(recruitmentNews.get());
+        return new ResponseEntity<>(HttpStatus.OK);
+    }
+
 }
