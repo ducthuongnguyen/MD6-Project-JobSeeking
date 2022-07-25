@@ -49,43 +49,18 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
     }
 
     @Override
+    public Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlace(String title, String place) {
+        return recruitmentNewsRepository.findAllByTitleContainingAndWorkingPlace(title,place);
+    }
+
+    @Override
+    public Iterable<RecruitmentNews> findAllByTitleContaining(String title) {
+        return recruitmentNewsRepository.findAllByTitleContaining(title);
+    }
+
+    @Override
     public Iterable<RecruitmentNews> findAllByCompany(Company company) {
         return recruitmentNewsRepository.findAllByCompany(company);
-    }
-    @Override
-    public Iterable<RecruitmentNews> findAllRecruitmentNews(String title) {
-        String tagSearch = "%" + title + "%";
-        return recruitmentNewsRepository.findAllRecruitmentNews(tagSearch);
-    }
-
-    @Override
-    public Iterable<RecruitmentNews> findAllByWorkingPlace(String title) {
-        String tagSearch = "%" + title + "%";
-        return recruitmentNewsRepository.findAllByWorkingPlace(tagSearch);
-    }
-
-    @Override
-    public Iterable<RecruitmentNews> findRecruimentByFieldName(String title) {
-        String tagSearch = "%" + title + "%";
-        return recruitmentNewsRepository.findRecruimentByFieldName(tagSearch);
-    }
-
-    @Override
-    public Iterable<RecruitmentNews> findRecruimentByTitleAndCompanyName(String title) {
-        String tagSearch = "%" + title + "%";
-        return recruitmentNewsRepository.findRecruimentByTitleAndCompanyName(tagSearch);
-    }
-
-    @Override
-    public Iterable<RecruitmentNews> findRecruimentByFieldAndWorkingPlace(String title) {
-        String tagSearch = "%" + title + "%";
-        return recruitmentNewsRepository.findRecruimentByFieldAndWorkingPlace(tagSearch);
-    }
-
-    @Override
-    public Iterable<RecruitmentNews> findRecruitmentNewsByTitleWorkingPlaceExperience(String title) {
-        String tagSearch = "%" + title + "%";
-        return recruitmentNewsRepository.findRecruitmentNewsByTitleWorkingPlaceExperience(tagSearch);
     }
 
 

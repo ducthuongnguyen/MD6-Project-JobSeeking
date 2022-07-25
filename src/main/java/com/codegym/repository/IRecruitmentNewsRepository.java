@@ -1,5 +1,6 @@
 package com.codegym.repository;
 
+import com.codegym.constant.Constant;
 import com.codegym.model.entity.Company;
 import com.codegym.model.entity.RecruitmentNews;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -24,27 +25,12 @@ public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNew
     @Query(value = "select * from recruitment_news where status = 1;", nativeQuery = true)
     Iterable<RecruitmentNews> findUnlockRecruitmentNews();
 
-    //tim theo ten,nganh,dia diem,luong nho nhat
-    @Query(value = "select * from recruitment_news r inner join fields f on f.id=r.field_id where r.title like :title  or r.working_place like :title or r.salary_from like :title or f.name like :title", nativeQuery = true)
-    Iterable<RecruitmentNews> findAllRecruitmentNews(@Param("title") String title);
+    //tim theo title, dia diem
+    @Query(value = "select * from recruitment_news where status = 1 and title like :title and working_place = :place", nativeQuery = true)
+    Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlace(@Param("title") String title,@Param("place") String place);
 
-    //tim theo dia diem
-    @Query(value = "select * from recruitment_news r where  r.working_place like :title ", nativeQuery = true)
-    Iterable<RecruitmentNews> findAllByWorkingPlace(@Param("title") String title);
+    //tim kiem theo title
+    @Query(value = "select * from recruitment_news where status = 1 and title like :title", nativeQuery = true)
+    Iterable<RecruitmentNews> findAllByTitleContaining(String title);
 
-    //tim kiem nhanh theo ten chuyen nganh
-    @Query(value = "select * from recruitment_news r inner join fields f on f.id=r.field_id where f.name like :title", nativeQuery = true)
-    Iterable<RecruitmentNews> findRecruimentByFieldName(@Param("title") String title);
-
-    //tim kiem nhanh theo tieu de,ten cong ty
-    @Query(value = "select * from recruitment_news r inner join companies c on c.id=r.company_id where r.title like :title or c.name like :title", nativeQuery = true)
-    Iterable<RecruitmentNews> findRecruimentByTitleAndCompanyName(@Param("title") String title);
-
-    //tim theo ten nganh,dia diem
-    @Query(value = "select * from recruitment_news r inner join fields f on f.id=r.field_id where r.working_place like :title or f.name like :title", nativeQuery = true)
-    Iterable<RecruitmentNews> findRecruimentByFieldAndWorkingPlace(@Param("title") String title);
-
-    //tim theo ten tieu de ,kinh nghiem,thanh pho
-    @Query(value = "select * from recruitment_news r where  r.working_place like :title or r.required_experience like :title or r.title like :title", nativeQuery = true)
-    Iterable<RecruitmentNews> findRecruitmentNewsByTitleWorkingPlaceExperience(@Param("title") String title);
 }
