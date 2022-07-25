@@ -20,6 +20,7 @@ public interface IRecruitmentNewsService extends IGeneralService<RecruitmentNews
 
     // danh sach tuyen dung khong khoa
     Iterable<RecruitmentNews> findAllUnlockRecruitmentNews();
+
     Page<RecruitmentNews> findPageUnlockRecruitmentNews(Pageable pageable);
 
     //tim theo title, dia diem

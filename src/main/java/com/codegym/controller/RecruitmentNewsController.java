@@ -130,6 +130,8 @@ public class RecruitmentNewsController {
     public ResponseEntity<Iterable<RecruitmentNews>> findAllUnlockRecruitmentNews() {
         return new ResponseEntity<>(recruitmentNewsService.findAllUnlockRecruitmentNews(), HttpStatus.OK);
     }
+
+    //danh sach tin tuyen dung khong khoa phan trang
     @GetMapping("/unlocked-list-page")
     public ResponseEntity<Page<RecruitmentNews>> findAllUnlockRecruitmentNews(Pageable pageable) {
         return new ResponseEntity<>(recruitmentNewsService.findPageUnlockRecruitmentNews(pageable), HttpStatus.OK);

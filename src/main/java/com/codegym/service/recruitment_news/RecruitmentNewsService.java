@@ -52,9 +52,8 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
 
     @Override
     public Page<RecruitmentNews> findPageUnlockRecruitmentNews(Pageable pageable) {
-        return recruitmentNewsRepository.findPageUnlockRecruitmentNews(pageable);
+        return recruitmentNewsRepository.findUnlockRecruitmentNews(pageable);
     }
-
 
     @Override
     public Iterable<RecruitmentNews> findAllByTitleContainingAndWorkingPlace(String title, String place) {
