@@ -7,6 +7,8 @@ import com.codegym.model.entity.RecruitmentNews;
 import com.codegym.service.company.CompanyService;
 import com.codegym.service.recruitment_news.IRecruitmentNewsService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -127,6 +129,10 @@ public class RecruitmentNewsController {
     @GetMapping("/unlocked-list")
     public ResponseEntity<Iterable<RecruitmentNews>> findAllUnlockRecruitmentNews() {
         return new ResponseEntity<>(recruitmentNewsService.findAllUnlockRecruitmentNews(), HttpStatus.OK);
+    }
+    @GetMapping("/unlocked-list-page")
+    public ResponseEntity<Page<RecruitmentNews>> findAllUnlockRecruitmentNews(Pageable pageable) {
+        return new ResponseEntity<>(recruitmentNewsService.findPageUnlockRecruitmentNews(pageable), HttpStatus.OK);
     }
 
     //tim kiem theo title

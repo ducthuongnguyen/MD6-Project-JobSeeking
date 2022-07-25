@@ -3,6 +3,8 @@ package com.codegym.repository;
 import com.codegym.constant.Constant;
 import com.codegym.model.entity.Company;
 import com.codegym.model.entity.RecruitmentNews;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.repository.query.Param;
@@ -22,8 +24,9 @@ public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNew
     Iterable<RecruitmentNews> findLockedRecruitmentNews();
 
     // danh sach tuyen dung khong khoa
-    @Query(value = "select * from recruitment_news where status = 1;", nativeQuery = true)
-    Iterable<RecruitmentNews> findUnlockRecruitmentNews();
+    @Query(value = "select * from recruitment_news where status = 1", nativeQuery = true)
+//    Iterable<RecruitmentNews> findUnlockRecruitmentNews();
+    Page<RecruitmentNews> findUnlockRecruitmentNews(Pageable pageable);
 
     //tim theo title, dia diem
     @Query(value = "select * from recruitment_news where status = 1 and title like :title and working_place = :place", nativeQuery = true)
