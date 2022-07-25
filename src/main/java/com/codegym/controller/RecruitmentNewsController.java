@@ -153,8 +153,8 @@ public class RecruitmentNewsController {
 
     //tìm theo job title, salary range, kinh nghiệm, thành phố
     @GetMapping("/find-4-criteria")
-    public ResponseEntity<Iterable<RecruitmentNews>> findAllByTitleSalaryExperiencePlace(@RequestParam String title, @RequestParam Integer salaryFrom, @RequestParam Integer salaryTo, @RequestParam Integer experience, @RequestParam String place) {
-        Iterable<RecruitmentNews> recruitmentNewsIterable = recruitmentNewsService.findAllByTitleSalaryExperiencePlace('%' + title + '%', salaryFrom, salaryTo, experience, place);
+    public ResponseEntity<Iterable<RecruitmentNews>> findAllByTitleSalaryExperiencePlace(@RequestParam String title, @RequestParam Integer from, @RequestParam Integer to, @RequestParam Integer experience, @RequestParam String place) {
+        Iterable<RecruitmentNews> recruitmentNewsIterable = recruitmentNewsService.findAllByTitleSalaryExperiencePlace('%' + title + '%', from, to, experience, '%' + place + '%');
         return new ResponseEntity<>(recruitmentNewsIterable, HttpStatus.OK);
     }
 }
