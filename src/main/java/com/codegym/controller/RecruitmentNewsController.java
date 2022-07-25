@@ -147,11 +147,7 @@ public class RecruitmentNewsController {
     //tim theo title, dia diem
     @GetMapping("/find-by-title-place")
     public ResponseEntity<Iterable<RecruitmentNews>> findAllByTitleContainingAndWorkingPlace(@RequestParam String title, @RequestParam String place) {
-        Iterable<RecruitmentNews> recruitmentNewsIterable;
-        if (place.equals("")) {
-            return new ResponseEntity(findAllByTitleContaining('%' + title + '%'), HttpStatus.OK);
-        }
-        recruitmentNewsIterable = recruitmentNewsService.findAllByTitleContainingAndWorkingPlace('%' + title + '%', place);
+        Iterable<RecruitmentNews> recruitmentNewsIterable = recruitmentNewsService.findAllByTitleContainingAndWorkingPlace('%' + title + '%', '%' + place + '%');
         return new ResponseEntity<>(recruitmentNewsIterable, HttpStatus.OK);
     }
 
