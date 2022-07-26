@@ -34,12 +34,12 @@ public class RecruitmentNews {
     private Field field;
     private Integer salaryFrom;
     private Integer salaryTo;
-    @JsonFormat(pattern = "dd-MM-yyyy")
+    @JsonFormat(pattern = "yyyy-MM-dd")
     private Date expiredDate;
     private Integer employeeQuantity;
     private Double requiredExperience;
     private Constant.Gender gender;
-    private String workingPlace;
+    private Long workingPlace;
     private String description;
     private Constant.Status status;
     private Constant.Proposal proposed;
