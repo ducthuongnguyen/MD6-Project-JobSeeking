@@ -29,6 +29,11 @@ public class MessageController {
         Iterable<Message> messages = messageService.findAll();
         return new ResponseEntity<>(messages, HttpStatus.OK);
     }
+    @GetMapping("/{id}")
+    public ResponseEntity<Optional<Message>> findById(@PathVariable Long id) {
+        Optional<Message> messages = messageService.findById(id);
+        return new ResponseEntity<>(messages, HttpStatus.OK);
+    }
     @PostMapping("")
     public ResponseEntity<Message> add(@RequestBody Message message) {
         message.setContent(" đã ứng tuyển vào tin tuyển ");
