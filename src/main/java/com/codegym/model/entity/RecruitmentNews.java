@@ -39,7 +39,7 @@ public class RecruitmentNews {
     private Integer employeeQuantity;
     private Double requiredExperience;
     private Constant.Gender gender;
-    private Long workingPlace;
+    private String workingPlace;
     private String description;
     private Constant.Status status;
     private Constant.Proposal proposed;
