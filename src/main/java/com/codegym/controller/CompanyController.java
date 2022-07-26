@@ -6,15 +6,20 @@ import com.codegym.model.entity.Role;
 import com.codegym.model.entity.User;
 import com.codegym.service.company.ICompanyService;
 import com.codegym.service.user.UserService;
+import lombok.extern.slf4j.Slf4j;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.web.bind.annotation.*;
+import org.springframework.web.multipart.MultipartFile;
 
 import java.util.HashSet;
+import java.io.IOException;
+import java.util.Base64;
 import java.util.Optional;
 import java.util.Set;
 
@@ -24,6 +29,7 @@ import static com.codegym.constant.Constant.Status.Mở;
 @RestController
 @RequestMapping("/companies")
 @CrossOrigin("*")
+@Slf4j
 public class CompanyController {
     @Autowired
     private ICompanyService companyService;
@@ -41,20 +47,32 @@ public class CompanyController {
         return new ResponseEntity<>(company.get(), HttpStatus.OK);
     }
 
-    @PutMapping("/{id}")
-    public ResponseEntity<Company> update(@PathVariable Long id, @RequestBody Company company) {
+    @PutMapping(value = "/{id}", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
+    public ResponseEntity<?> update(@PathVariable Long id, @RequestPart(value = "company") Company company, @RequestPart(value = "image", required = false) MultipartFile file) {
         Optional<Company> companyOptional = companyService.findById(id);
         if (!companyOptional.isPresent()) {
             return new ResponseEntity<>(HttpStatus.NOT_FOUND);
         }
+        String image = null;
+        try {
+            byte[] fileContent = file.getBytes();
+            String outputFile = Base64.getEncoder().encodeToString(fileContent);
+            String contentType = file.getContentType();
+            image = "data:".concat(contentType).concat(";base64,").concat(outputFile);
+
+        } catch (IOException e) {
+            log.info("Error in file get bytes ``", file);
+        }
+        company.setAvatar(image);
         company.setId(companyOptional.get().getId());
         company.setEmail(companyOptional.get().getEmail());
         company.setPassword(companyOptional.get().getPassword());
         company.setStatus(companyOptional.get().getStatus());
         company.setProposed(companyOptional.get().getProposed());
         company.setRoles(companyOptional.get().getRoles());
-        companyService.save(company);
-        return new ResponseEntity<>(HttpStatus.OK);
+        company.setApproval(companyOptional.get().getApproval());
+        Company newCompany = companyService.save(company);
+        return new ResponseEntity<>(newCompany, HttpStatus.OK);
     }
 
     @PutMapping("/approve/{id}")
@@ -80,11 +98,6 @@ public class CompanyController {
     public ResponseEntity<Page<Company>> findAll(Pageable pageable) {
         return new ResponseEntity<>(companyService.findAll(pageable), HttpStatus.OK);
     }
-
-//    @GetMapping()
-//    public ResponseEntity<Iterable<Company>> findAll() {
-//        return new ResponseEntity<>(companyService.findAll(), HttpStatus.OK);
-//    }
 
     @PutMapping("/update-status/{id}")
     public ResponseEntity<Company> updateStatus(@PathVariable Long id) {

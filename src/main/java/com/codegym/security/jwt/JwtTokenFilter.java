@@ -9,6 +9,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.web.authentication.WebAuthenticationDetailsSource;
 import org.springframework.web.filter.OncePerRequestFilter;
+import org.springframework.web.multipart.MaxUploadSizeExceededException;
 
 import javax.servlet.FilterChain;
 import javax.servlet.ServletException;
@@ -17,35 +18,36 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 public class JwtTokenFilter extends OncePerRequestFilter {
-private static final Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
-@Autowired
-private JwtProvider jwtProvider;
-@Autowired
-private UserDetailService userDetailService;
+    private static final Logger logger = LoggerFactory.getLogger(JwtTokenFilter.class);
+    @Autowired
+    private JwtProvider jwtProvider;
+    @Autowired
+    private UserDetailService userDetailService;
+
     @Override
     protected void doFilterInternal(HttpServletRequest request, HttpServletResponse response, FilterChain filterChain) throws ServletException, IOException {
         try {
-        String token=getJwt(request);
-        if (token!=null&& jwtProvider.validateToken(token)){
-            String username=jwtProvider.getUserNameToken(token);
-            UserDetails userDetails=userDetailService.loadUserByUsername(username);
-            UsernamePasswordAuthenticationToken authenticationToken=new UsernamePasswordAuthenticationToken(
-                    userDetails,null,userDetails.getAuthorities());
-            //build 1 user tren  web cua minh
-            authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
-            SecurityContextHolder.getContext().setAuthentication(authenticationToken);
-
+            String token = getJwt(request);
+            if (token != null && jwtProvider.validateToken(token)) {
+                String username = jwtProvider.getUserNameToken(token);
+                UserDetails userDetails = userDetailService.loadUserByUsername(username);
+                UsernamePasswordAuthenticationToken authenticationToken = new UsernamePasswordAuthenticationToken(userDetails, null, userDetails.getAuthorities());
+                //build 1 user tren  web cua minh
+                authenticationToken.setDetails(new WebAuthenticationDetailsSource().buildDetails(request));
+                SecurityContextHolder.getContext().setAuthentication(authenticationToken);
+            }
+        } catch (MaxUploadSizeExceededException e) {
+            logger.error("Exception when upload file ", e);
+        } catch (Exception e) {
+            logger.error("can't set user authentication --> Message:{}", e);
         }
-        }catch (Exception e){
-        logger.error("can't set user authentication --> Message:{}",e);
-
-        }
-        filterChain.doFilter(request,response);
+        filterChain.doFilter(request, response);
     }
-    public String getJwt(HttpServletRequest request){
-        String authHeader=request.getHeader("Authorization");
-        if (authHeader!=null &&authHeader.startsWith("Bearer")){
-            return authHeader.replace("Bearer","");
+
+    public String getJwt(HttpServletRequest request) {
+        String authHeader = request.getHeader("Authorization");
+        if (authHeader != null && authHeader.startsWith("Bearer")) {
+            return authHeader.replace("Bearer", "");
         }
         return null;
     }

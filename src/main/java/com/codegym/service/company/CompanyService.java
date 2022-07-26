@@ -60,22 +60,6 @@ public class CompanyService implements ICompanyService {
 
     @Override
     public Company save(Company company) {
-        try {
-            DataMailDTO dataMail = new DataMailDTO();
-
-            dataMail.setTo(company.getEmail());
-            dataMail.setSubject(Const.SEND_MAIL_SUBJECT.CLIENT_REGISTER);
-
-            Map<String, Object> props = new HashMap<>();
-            props.put("name", company.getName());
-            props.put("email", company.getEmail());
-            dataMail.setProps(props);
-
-            mailService.sendHtmlMail(dataMail, Const.TEMPLATE_FILE_NAME.CLIENT_REGISTER);
-            return companyRepository.save(company);
-        } catch (MessagingException exp) {
-            exp.printStackTrace();
-        }
         return companyRepository.save(company);
     }
 
