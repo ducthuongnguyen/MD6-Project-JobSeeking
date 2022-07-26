@@ -112,30 +112,21 @@ public class AuthController {
 
     @PostMapping("/sign-in-company")
     public ResponseEntity<?> login1(@Valid @RequestBody SignUpCompanyForm signUpCompanyForm) {
-        Optional<Company> companyOptional = companyService.findByEmail(signUpCompanyForm.getEmail());
-        try {
-            Authentication authentication = authenticationManager.authenticate(
-                    new UsernamePasswordAuthenticationToken(signUpCompanyForm.getEmail(), signUpCompanyForm.getPassword()));
-            SecurityContextHolder.getContext().setAuthentication(authentication);
-            String token = jwtProvider.createToken(authentication);
-            UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
-//        Company company = companyService.findByEmail(userPrinciple.getEmail()).get();
-            return ResponseEntity.ok(new JwtResponse(token, companyService.findByEmail(userPrinciple.getEmail()).get().getId(), userPrinciple.getName(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities()));
-        } catch (BadCredentialsException e){
-            log.info("Lỗi authen rồi", e.getMessage());
-            if(!companyOptional.isPresent()){
-                return new ResponseEntity<>(new MyResponseBody(Response.USERNAME_NOT_FOUND, null), HttpStatus.BAD_REQUEST);
-            } else {
-                String encodedPassword = companyOptional.get().getPassword();
-                if(!passwordEncoder.matches(signUpCompanyForm.getPassword(), encodedPassword)){
-                    return new ResponseEntity<>(new MyResponseBody(Response.PASSWORD_INCORRECT, null), HttpStatus.BAD_REQUEST);
-                }
-                return new ResponseEntity<>(new MyResponseBody<>(Response.OBJECT_NOT_FOUND, null), HttpStatus.FORBIDDEN);
-            }
+        Optional<Company> company = companyService.findByEmail(signUpCompanyForm.getEmail());
+
+        Authentication authentication = authenticationManager.authenticate(
+                new UsernamePasswordAuthenticationToken(signUpCompanyForm.getEmail(), signUpCompanyForm.getPassword()));
+        SecurityContextHolder.getContext().setAuthentication(authentication);
+        String token = jwtProvider.createToken(authentication);
+        UserPrinciple userPrinciple = (UserPrinciple) authentication.getPrincipal();
+        JwtResponse jwtResponse;
+        if (company.isPresent()){
+            jwtResponse = new JwtResponse(token, company.get().getId(), userPrinciple.getName(), userPrinciple.getUsername(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities());
+        } else {
+            jwtResponse = new JwtResponse(token, userPrinciple.getId(), userPrinciple.getName(), userPrinciple.getUsername(), userPrinciple.getEmail(), userPrinciple.getAvatar(), userPrinciple.getAuthorities());
         }
-//        Email là duy nhất mà, sao DB nhiều email hương vậy--> lõi
-        //nãy e vẫn đăng nhập bt e k hiểu sao lại có thêm trong db vậy nữa .
-       // Đứa nào register( rồi). xóa đi
+        return ResponseEntity.ok(jwtResponse);
+
     }
 
     @PostMapping(value = "/sign-up-company", consumes = MediaType.MULTIPART_FORM_DATA_VALUE)
