@@ -58,4 +58,18 @@ public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNew
                                                                        @Param("experience") Integer required_experience,
                                                                        @Param("place") String working_place,
                                                                        @Param("fieldId") Long fieldId);
+
+    @Query(value = "select * from recruitment_news r  inner join fields f on f.id=r.field_id where r.status = 1 and"
+            + " (:title is null or r.title like :title)" + " and"
+            + " (:from is null or r.salary_from >= :from)" + " and"
+            + " (:to is null or r.salary_to <= :to)" + " and"
+            + " (:experience is null or r.required_experience = :experience)" + " and"
+            + " (:place is null or r.working_place like :place)" + "and"
+            + " (:fieldId is null or f.id = :fieldId)", nativeQuery = true)
+    Page<RecruitmentNews> findAllByTitleSalaryExperiencePlaceFieldPage(@Param("title") String title,
+                                                                       @Param("from") Integer from,
+                                                                       @Param("to") Integer to,
+                                                                       @Param("experience") Integer required_experience,
+                                                                       @Param("place") String working_place,
+                                                                       @Param("fieldId") Long fieldId, Pageable pageable);
 }

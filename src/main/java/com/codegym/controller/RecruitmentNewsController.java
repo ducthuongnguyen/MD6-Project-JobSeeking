@@ -175,4 +175,11 @@ public class RecruitmentNewsController {
         return new ResponseEntity<>(HttpStatus.OK);
     }
 
+    //tìm theo job title, salary range, kinh nghiệm, thành phố, chuyen nganh (field) phan trang
+    @GetMapping("/find-6-criteria-page")
+    public ResponseEntity<Page<RecruitmentNews>> findAllByTitleSalaryExperiencePlaceFieldPage(@RequestParam String title, @RequestParam Integer from, @RequestParam Integer to, @RequestParam Integer experience, @RequestParam String place, @RequestParam Long fieldId, Pageable pageable) {
+        Page<RecruitmentNews> recruitmentNewsIterable = recruitmentNewsService.findAllByTitleSalaryExperiencePlaceFieldPage('%' + title + '%', from, to, experience, '%' + place + '%',fieldId, pageable);
+        return new ResponseEntity<>(recruitmentNewsIterable, HttpStatus.OK);
+    }
+
 }

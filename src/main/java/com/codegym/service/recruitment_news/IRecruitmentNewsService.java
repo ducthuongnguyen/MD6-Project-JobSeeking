@@ -34,4 +34,7 @@ public interface IRecruitmentNewsService extends IGeneralService<RecruitmentNews
 
     //tìm theo job title, salary range, kinh nghiệm, thành phố
     Iterable<RecruitmentNews> findAllByTitleSalaryExperiencePlaceField(String title, Integer salary_from, Integer salary_to, Integer required_experience, String working_place, Long fieldId);
+
+    //tìm theo job title, salary range, kinh nghiệm, thành phố
+    Page<RecruitmentNews> findAllByTitleSalaryExperiencePlaceFieldPage(String title, Integer salary_from, Integer salary_to, Integer required_experience, String working_place, Long fieldId, Pageable pageable);
 }
