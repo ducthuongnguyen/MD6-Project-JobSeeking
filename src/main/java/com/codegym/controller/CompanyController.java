@@ -159,4 +159,5 @@ public class CompanyController {
     public ResponseEntity<Iterable<Company>> findAllLockCompanies() {
         return new ResponseEntity<>(companyService.findAllLockCompanies(), HttpStatus.OK);
     }
+
 }

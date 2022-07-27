@@ -2,6 +2,7 @@ package com.codegym.service.recruitment_news;
 
 import com.codegym.model.entity.Company;
 import com.codegym.model.entity.RecruitmentNews;
+import com.codegym.model.entity.User;
 import com.codegym.repository.IRecruitmentNewsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
@@ -83,6 +84,11 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
     @Override
     public Iterable<RecruitmentNews> findAllByCompany(Company company) {
         return recruitmentNewsRepository.findAllByCompany(company);
+    }
+
+    @Override
+    public Iterable<RecruitmentNews> findAllByUser(Long id) {
+        return recruitmentNewsRepository.findAllByUser(id);
     }
 
 

@@ -180,5 +180,8 @@ public class RecruitmentNewsController {
         Page<RecruitmentNews> recruitmentNewsIterable = recruitmentNewsService.findAllByTitleSalaryExperiencePlaceFieldPage('%' + title + '%', from, to, experience, '%' + place + '%',fieldId, pageable);
         return new ResponseEntity<>(recruitmentNewsIterable, HttpStatus.OK);
     }
-
+    @GetMapping("/apply-recruitment/{id}")
+    public ResponseEntity<Iterable<RecruitmentNews>> findAllByUser(@PathVariable Long id) {
+        return new ResponseEntity<>(recruitmentNewsService.findAllByUser(id), HttpStatus.OK);
+    }
 }

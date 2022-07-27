@@ -3,6 +3,7 @@ package com.codegym.repository;
 import com.codegym.constant.Constant;
 import com.codegym.model.entity.Company;
 import com.codegym.model.entity.RecruitmentNews;
+import com.codegym.model.entity.User;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
@@ -18,6 +19,10 @@ public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNew
 
     //danh sach tin theo cong ty
     Iterable<RecruitmentNews> findAllByCompany(Company company);
+
+    //danh sach tin theo người dùng
+    @Query(value = "select * from recruitment_news INNER JOIN recruitment_news_user on recruitment_news_user.recruitment_news_id = recruitment_news.id where recruitment_news_user.user_id = :id", nativeQuery = true)
+    Iterable<RecruitmentNews> findAllByUser(Long id);
 
     //danh sach tin tuyen dung bi khoa
     @Query(value = "select * from recruitment_news where status = 0 ;", nativeQuery = true)
