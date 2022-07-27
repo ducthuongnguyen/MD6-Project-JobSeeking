@@ -2,6 +2,7 @@ package com.codegym.service.recruitment_news;
 
 import com.codegym.model.entity.Company;
 import com.codegym.model.entity.RecruitmentNews;
+import com.codegym.model.entity.User;
 import com.codegym.service.IGeneralService;
 import org.springframework.data.jpa.repository.Query;
 import org.springframework.data.domain.Page;
@@ -14,6 +15,8 @@ public interface IRecruitmentNewsService extends IGeneralService<RecruitmentNews
     Iterable<RecruitmentNews> findAllProposedRecruitmentNews();
 
     Iterable<RecruitmentNews> findAllByCompany(Company company);
+
+    Iterable<RecruitmentNews> findAllByUser(Long id);
 
     //danh sach tin tuyen dung bi khoa
     Iterable<RecruitmentNews> findAllLockedRecruitmentNews();
