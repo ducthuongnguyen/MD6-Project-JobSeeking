@@ -66,6 +66,11 @@ public class RecruitmentNewsController {
     public ResponseEntity<Iterable<RecruitmentNews>> findAllProposedRecruitmentNews() {
         return new ResponseEntity<>(recruitmentNewsService.findAllProposedRecruitmentNews(), HttpStatus.OK);
     }
+    //Danh sach tin tuyen dung duoc de xuat không khóa
+    @GetMapping("/proposal-news-status")
+    public ResponseEntity<Iterable<RecruitmentNews>> findAllProposedRecruitmentNewsAndStatus() {
+        return new ResponseEntity<>(recruitmentNewsService.findProposedRecruitmentNewsAndStatus(), HttpStatus.OK);
+    }
 
     @GetMapping
     public ResponseEntity<Iterable<RecruitmentNews>> findAllRecruitmentNew() {

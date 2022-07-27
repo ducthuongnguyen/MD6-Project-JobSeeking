@@ -17,6 +17,10 @@ public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNew
     @Query(value = "select * from recruitment_news where proposed = 0;", nativeQuery = true)
     Iterable<RecruitmentNews> findProposedRecruitmentNews();
 
+    //danh sach tin de xuat không khóa
+    @Query(value = "select * from recruitment_news where proposed = 0 and status = 0;", nativeQuery = true)
+    Iterable<RecruitmentNews> findProposedRecruitmentNewsAndStatus();
+
     //danh sach tin theo cong ty
     Iterable<RecruitmentNews> findAllByCompany(Company company);
 
