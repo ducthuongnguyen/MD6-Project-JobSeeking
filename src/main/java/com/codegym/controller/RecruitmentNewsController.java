@@ -171,8 +171,7 @@ public class RecruitmentNewsController {
         Set<User> user1 = recruitmentNews.get().getUsers();
         user1.add(user);
         recruitmentNews.get().setUsers(user1);
-        recruitmentNewsService.save(recruitmentNews.get());
-        return new ResponseEntity<>(HttpStatus.OK);
+        return new ResponseEntity<>(recruitmentNewsService.save(recruitmentNews.get()),HttpStatus.OK);
     }
 
     //tìm theo job title, salary range, kinh nghiệm, thành phố, chuyen nganh (field) phan trang
