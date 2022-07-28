@@ -123,6 +123,16 @@ public class RecruitmentNewsController {
         return new ResponseEntity<>(recruitmentNews, HttpStatus.OK);
     }
 
+    @GetMapping("/find-by-company-order-by/{id}")
+    public ResponseEntity<Iterable<RecruitmentNews>> findAllByCompanyOrderByIdDesc(HttpServletRequest request, @PathVariable Long id) {
+        Optional<Company> companyOptional = companyService.findById(id);
+        if (!companyOptional.isPresent()) {
+            return new ResponseEntity<>(HttpStatus.NOT_FOUND);
+        }
+        Iterable<RecruitmentNews> recruitmentNews = recruitmentNewsService.findAllByCompanyOrderByIdDesc(companyOptional.get());
+        return new ResponseEntity<>(recruitmentNews, HttpStatus.OK);
+    }
+
     //danh sach tin tuyen dung bi khoa
     @GetMapping("/locked-list")
     public ResponseEntity<Iterable<RecruitmentNews>> findAllLockedRecruitmentNews() {

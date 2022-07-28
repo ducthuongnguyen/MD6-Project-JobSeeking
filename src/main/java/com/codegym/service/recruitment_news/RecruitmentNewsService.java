@@ -87,6 +87,11 @@ public class RecruitmentNewsService implements IRecruitmentNewsService {
     }
 
     @Override
+    public Iterable<RecruitmentNews> findAllByCompanyOrderByIdDesc(Company company) {
+        return recruitmentNewsRepository.findAllByCompanyOrderByIdDesc(company);
+    }
+
+    @Override
     public Iterable<RecruitmentNews> findAllByUser(Long id) {
         return recruitmentNewsRepository.findAllByUser(id);
     }
