@@ -16,6 +16,8 @@ public interface IRecruitmentNewsService extends IGeneralService<RecruitmentNews
 
     Iterable<RecruitmentNews> findAllByCompany(Company company);
 
+    Iterable<RecruitmentNews> findAllByCompanyOrderByIdDesc(Company company);
+
     Iterable<RecruitmentNews> findAllByUser(Long id);
 
     //danh sach tin tuyen dung bi khoa

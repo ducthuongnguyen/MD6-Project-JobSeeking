@@ -24,6 +24,10 @@ public interface IRecruitmentNewsRepository extends JpaRepository<RecruitmentNew
     //danh sach tin theo cong ty
     Iterable<RecruitmentNews> findAllByCompany(Company company);
 
+
+
+    Iterable<RecruitmentNews> findAllByCompanyOrderByIdDesc(Company company);
+
     //danh sach tin theo người dùng
     @Query(value = "select * from recruitment_news INNER JOIN recruitment_news_user on recruitment_news_user.recruitment_news_id = recruitment_news.id where recruitment_news_user.user_id = :id", nativeQuery = true)
     Iterable<RecruitmentNews> findAllByUser(Long id);
